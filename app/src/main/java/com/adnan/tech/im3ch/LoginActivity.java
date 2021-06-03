@@ -1,11 +1,13 @@
 package com.adnan.tech.im3ch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,7 +29,6 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
     EditText et_user_name, et_pwd, et_email;
     MyPrefs prefs;
     Context context;
-
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
@@ -73,56 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void OnClickListener() {
         try {
-            btn_login.setOnClickListener(v -> {
-                try {
-                   //funLogin();
-                    if (!(et_user_name.getText().toString().equals("") &&
-                            et_pwd.getText().toString().equals("") &&
-                            et_email.getText().toString().equals(""))) {
-                        if (isValidEmail(et_email.getText().toString())) {
-
-                        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                        StrictMode.setThreadPolicy(policy);
-                        OkHttpClient client = new OkHttpClient();
-                        MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
-                        Log.e("test",   "name="+et_user_name.getText().toString()+"&password="+et_pwd.getText().toString()+"&email="+et_email.getText().toString());
-                        RequestBody body = RequestBody.create(mediaType,"name="+et_user_name.getText().toString()+"&password="+et_pwd.getText().toString()+"&email="+et_email.getText().toString()+"");//"name=sa&password=sa123456&email=sa@gmail.com"); //
-                        Request request = new Request.Builder()
-                                .url(new Api().URL+new Api().login)
-                                .method("POST", body)
-                                .addHeader("Content-Type", " application/x-www-form-urlencoded")
-                                .build();
-                        client.newCall(request).enqueue(
-                                new Callback() {
-                                    @Override
-                                    public void onFailure(Request request, IOException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    @Override
-                                    public void onResponse(Response response) {
-                                        Log.e("test", response.message());
-                                        if (!response.isSuccessful()) {
-
-                                        } else {
-
-                                            // do something wih the result
-                                        }
-                                    }
-                                });
-
-                        } else {
-                            Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
-                    }
-                    /*Intent intent = new Intent(this, HomeActivity.class);
-                    startActivity(intent);*/
-                } catch (Exception ex) {
-                    new DialogClass(this, "Exception", ex.getMessage());
-                }
-            });
+            btn_login.setOnClickListener(this::onClick);
         } catch (
                 Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
@@ -299,5 +250,59 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         new Anim().Back(this);
+    }
+
+    private void onClick(View v) {
+        try {
+            //funLogin();
+            if (!(et_user_name.getText().toString().equals("") &&
+                    et_pwd.getText().toString().equals("") &&
+                    et_email.getText().toString().equals(""))) {
+                if (isValidEmail(et_email.getText().toString())) {
+
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                    OkHttpClient client = new OkHttpClient();
+                    MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
+                    Log.e("test", "name=" + et_user_name.getText().toString() + "&password=" + et_pwd.getText().toString() + "&email=" + et_email.getText().toString());
+                    RequestBody body = RequestBody.create(mediaType, "name=" + et_user_name.getText().toString() + "&password=" + et_pwd.getText().toString() + "&email=" + et_email.getText().toString() + "");//"name=sa&password=sa123456&email=sa@gmail.com"); //
+                    Request request = new Request.Builder()
+                            .url(new Api().URL + new Api().login)
+                            .method("POST", body)
+                            .addHeader("Content-Type", " application/x-www-form-urlencoded")
+                            .build();
+                    client.newCall(request).enqueue(
+                            new Callback() {
+                                @Override
+                                public void onFailure(Request request, IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void onResponse(Response response) {
+                                    Log.e("test", response.message());
+                                    Intent intent = new Intent(context, HomeActivity.class);
+                                    startActivity(intent);
+                                    if (!response.isSuccessful()) {
+                                         intent = new Intent(context, HomeActivity.class);
+                                        startActivity(intent);
+                                    } else {
+
+                                        // do something wih the result
+                                    }
+                                }
+                            });
+
+                } else {
+                    Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
+            }
+            /*Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);*/
+        } catch (Exception ex) {
+            new DialogClass(this, "Exception", ex.getMessage());
+        }
     }
 }
