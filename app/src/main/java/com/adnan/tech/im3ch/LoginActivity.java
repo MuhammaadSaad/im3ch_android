@@ -75,24 +75,18 @@ public class LoginActivity extends AppCompatActivity {
         try {
             btn_login.setOnClickListener(v -> {
                 try {
-                    funLogin();
-                    /*if (et_user_name.getText().toString().equals("") &&
+                   //funLogin();
+                    if (!(et_user_name.getText().toString().equals("") &&
                             et_pwd.getText().toString().equals("") &&
-                            et_email.getText().toString().equals("")) {
+                            et_email.getText().toString().equals(""))) {
                         if (isValidEmail(et_email.getText().toString())) {
 
-                        } else {
-                            Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
-                    }*/
-                    try {
                         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                         StrictMode.setThreadPolicy(policy);
                         OkHttpClient client = new OkHttpClient();
                         MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
-                        RequestBody body = RequestBody.create(mediaType, "name=sa&password=sa123456&email=sa@gmail.com");
+                        Log.e("test",   "name="+et_user_name.getText().toString()+"&password="+et_pwd.getText().toString()+"&email="+et_email.getText().toString());
+                        RequestBody body = RequestBody.create(mediaType,"name="+et_user_name.getText().toString()+"&password="+et_pwd.getText().toString()+"&email="+et_email.getText().toString()+"");//"name=sa&password=sa123456&email=sa@gmail.com"); //
                         Request request = new Request.Builder()
                                 .url(new Api().URL+new Api().login)
                                 .method("POST", body)
@@ -116,8 +110,12 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                    }catch (Exception ex){
-                        ex.printStackTrace();
+
+                        } else {
+                            Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
                     }
                     /*Intent intent = new Intent(this, HomeActivity.class);
                     startActivity(intent);*/
