@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_bg" />
+
+        <View
+            android:id="@+id/overlay_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".5"
+            android:background="@color/grey" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:layout_marginTop="50sp"
+            android:alpha=".7"
+            android:src="@drawable/logo" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_setting"
+                    android:layout_width="60sp"
+                    android:layout_height="60sp"
+                    android:layout_marginRight="10sp"
+                    android:contentDescription="TODO"
+                    android:foreground="?android:selectableItemBackground"
+                    android:padding="5sp"
+                    android:src="@drawable/ic_baseline_settings_24" />
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10sp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Settings"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/btn_fix_my_ride"
+                    android:layout_width="200dp"
+                    android:layout_height="70sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_fix_my_ride"
+                    android:foreground="?android:selectableItemBackground" />
+
+                <ImageView
+                    android:id="@+id/btn_i_fix_ride"
+                    android:layout_width="200dp"
+                    android:layout_height="70sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_i_fix_ride"
+                    android:foreground="?android:selectableItemBackground" />
+
+                <ImageView
+                    android:id="@+id/btn_highway_hand"
+                    android:layout_width="200dp"
+                    android:layout_height="70sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_highway_hand"
+                    android:foreground="?android:selectableItemBackground" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

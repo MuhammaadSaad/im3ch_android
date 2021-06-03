@@ -1,0 +1,79 @@
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
+Add: 
+
+RequestBody body = RequestBody.create(mediaType, "phone=14728744&latitude=13.5225&email=sa@gmail.com&longitude=52.666&errortype=asas&image=test");
+Request request = new Request.Builder()
+  .url("http://localhost:8080/Fix/")
+  .method("POST", body)
+  .addHeader("Content-Type", " application/x-www-form-urlencoded")
+  .addHeader("Cookie", "jwtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiOWQ4NmNiM2UyZjBjOTA5MGExOWMiLCJpYXQiOjE2MjIyNzA5MDB9.tV9x5ilB3OfcLBMlwwUbIK2gfmCfMv_bWjTV5ElRV1c")
+  .build();
+Response response = client.newCall(request).execute();
+
+
+Get:
+
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("http://localhost:8080/Fix/60b1f5590d2e2f3d38ecceff")
+  .method("GET", null)
+  .addHeader("Cookie", "jwtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiOWQ4NmNiM2UyZjBjOTA5MGExOWMiLCJpYXQiOjE2MjIyNzA5MDB9.tV9x5ilB3OfcLBMlwwUbIK2gfmCfMv_bWjTV5ElRV1c")
+  .build();
+Response response = client.newCall(request).execute();
+
+Update: 
+
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
+RequestBody body = RequestBody.create(mediaType, "phone=147287443&latitude=13.5225&email=sa@gmail.com&longitude=52.666&errortype=asas&image=test");
+Request request = new Request.Builder()
+  .url("http://localhost:8080/Fix/60b1f5590d2e2f3d38ecceff")
+  .method("PUT", body)
+  .addHeader("Content-Type", " application/x-www-form-urlencoded")
+  .addHeader("Cookie", "jwtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiOWQ4NmNiM2UyZjBjOTA5MGExOWMiLCJpYXQiOjE2MjIyNzA5MDB9.tV9x5ilB3OfcLBMlwwUbIK2gfmCfMv_bWjTV5ElRV1c")
+  .build();
+Response response = client.newCall(request).execute();
+
+
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
+RequestBody body = RequestBody.create(mediaType, "phone=14728744&latitude=13.5225&email=sa@gmail.com&longitude=52.666&errortype=asas");
+Request request = new Request.Builder()
+  .url("http://localhost:8080/customer/")
+  .method("POST", body)
+  .addHeader("Content-Type", " application/x-www-form-urlencoded")
+  .addHeader("Cookie", "jwtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiOWQ4NmNiM2UyZjBjOTA5MGExOWMiLCJpYXQiOjE2MjIyNzA5MDB9.tV9x5ilB3OfcLBMlwwUbIK2gfmCfMv_bWjTV5ElRV1c")
+  .build();
+Response response = client.newCall(request).execute();
+
+
+
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("http://localhost:8080/customer/60b1e8de0d2e2f3d38eccefe")
+  .method("GET", null)
+  .addHeader("Cookie", "jwtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiOWQ4NmNiM2UyZjBjOTA5MGExOWMiLCJpYXQiOjE2MjIyNzA5MDB9.tV9x5ilB3OfcLBMlwwUbIK2gfmCfMv_bWjTV5ElRV1c")
+  .build();
+Response response = client.newCall(request).execute();
+
+Delete: 
+
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("text/plain");
+RequestBody body = RequestBody.create(mediaType, "");
+Request request = new Request.Builder()
+  .url("http://localhost:8080/customer/60b1f9cc80654e32686cc8e3")
+  .method("DELETE", body)
+  .addHeader("Cookie", "jwtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiOWQ4NmNiM2UyZjBjOTA5MGExOWMiLCJpYXQiOjE2MjIyNzA5MDB9.tV9x5ilB3OfcLBMlwwUbIK2gfmCfMv_bWjTV5ElRV1c")
+  .build();
+Response response = client.newCall(request).execute();
+
+
+Fix or customer mein get hai baki abhi nhi bana

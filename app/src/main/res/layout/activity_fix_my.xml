@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FixMyActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_bg" />
+
+        <View
+            android:id="@+id/overlay_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".5"
+            android:background="@color/grey" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:layout_marginTop="50sp"
+            android:alpha=".7"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:padding="5sp"
+            android:singleLine="true"
+            android:text="FIX MY RIDE"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:background="@drawable/round_edit_text"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:text="Customer Car Details"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/round_edit_text">
+
+                <TextView
+                    android:id="@+id/tv_car_model"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_drop"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:text="Car Model"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/round_edit_text">
+
+                <TextView
+                    android:id="@+id/tv_car_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_drop"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:text="Car Year"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/round_edit_text">
+
+                <EditText
+                    android:id="@+id/et_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="Enter your Budget here"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/white"
+                    android:text="Out Side"
+                    android:textColor="@android:color/white" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/white"
+                    android:text="In Side"
+                    android:textColor="@android:color/white" />
+
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/round_edit_text">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:drawableRight="@drawable/ic_location"
+                    android:gravity="center"
+                    android:hint="Add Location"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/round_edit_text">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:gravity="center"
+                    android:hint="Description"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_Next"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/on_click_btn"
+                android:text="Next"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>
