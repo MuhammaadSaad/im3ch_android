@@ -9,7 +9,7 @@ public class ParamGetter {
 
 
     public static String getValue(ArrayList<ModelParams> lst_params) {
-        StringBuilder value = new StringBuilder("?");
+        StringBuilder value = new StringBuilder("");
         for (int i = 0; i < lst_params.size(); i++) {
             if (i == lst_params.size() - 1) {
                 value.append(lst_params.get(i).name).append("=").append(lst_params.get(i).value);
