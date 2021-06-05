@@ -17,6 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        prefs = new MyPrefs(this);
         try {
             Thread mSplashThread = new Thread() {
                 @Override
@@ -29,7 +30,11 @@ public class SplashActivity extends AppCompatActivity {
                         ex.fillInStackTrace();
                     }
                     try {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        if (!prefs.get_Val("email").equalsIgnoreCase("")) {
+                            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        } else {
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        }
                         finish();
                     } catch (Exception ex) {
                         new DialogClass(context, "Exception", ex.getMessage());

@@ -2,6 +2,7 @@ package com.adnan.tech.im3ch.Util;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 public class DialogClass {
     Context context;
@@ -24,6 +25,7 @@ public class DialogClass {
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
         } catch (Exception ex) {
+            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

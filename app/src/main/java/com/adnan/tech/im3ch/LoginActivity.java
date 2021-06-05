@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.adnan.tech.im3ch.Model.ModelParams;
 import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.Api;
+import com.adnan.tech.im3ch.Util.BackgroundToast;
 import com.adnan.tech.im3ch.Util.DialogClass;
 import com.adnan.tech.im3ch.Util.Dialog_Loading;
 import com.adnan.tech.im3ch.Util.MyPrefs;
@@ -118,7 +119,9 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Request request, IOException e) {
                                     loading.dismiss();
-                                    new DialogClass(context, "Error", e.getMessage());
+                                    new BackgroundToast().showDialog(context,
+                                            "Error",
+                                            e.getMessage());
                                     e.printStackTrace();
                                 }
 
@@ -128,9 +131,14 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.e("test", response.message());
                                     Intent intent = new Intent(context, HomeActivity.class);
                                     if (response.message().equalsIgnoreCase("OK")) {
+                                        prefs.put_Val("name", et_user_name.getText().toString());
+                                        prefs.put_Val("password", et_user_name.getText().toString());
+                                        prefs.put_Val("email", et_user_name.getText().toString());
                                         startActivity(intent);
                                     } else {
-                                        new DialogClass(context, "Error", response.message());
+                                        new BackgroundToast().showDialog(context,
+                                                "Error",
+                                                "Wrong Credentials");
                                     }
                                 }
                             });
@@ -144,4 +152,6 @@ public class LoginActivity extends AppCompatActivity {
             new DialogClass(this, "Exception", ex.getMessage());
         }
     }
+
+
 }
