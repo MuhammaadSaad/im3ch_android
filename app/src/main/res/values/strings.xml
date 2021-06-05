@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">iM3ch</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve">AIzaSyB3EwfEwa0xqOYu4KSf23xjDtghE8QH1DM</string>
+
 </resources>

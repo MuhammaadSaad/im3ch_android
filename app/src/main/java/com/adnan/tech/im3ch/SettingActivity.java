@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.DialogClass;
+import com.adnan.tech.im3ch.Util.MyPrefs;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class SettingActivity extends AppCompatActivity {
     ImageView img_setting_more, img_profile;
     LinearLayout lnr_name, lnr_password, lnr_email, lnr_phone, lnr_sign_out;
     TextView tv_name, tv_password, tv_email, tv_phone, tv_sign_out;
+    MyPrefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class SettingActivity extends AppCompatActivity {
             new Anim().Entry(this);
 
             context = this;
+            prefs = new MyPrefs(this);
             tv_name = findViewById(R.id.tv_name);
             tv_password = findViewById(R.id.tv_password);
             tv_email = findViewById(R.id.tv_email);
@@ -56,6 +59,11 @@ public class SettingActivity extends AppCompatActivity {
 
             img_profile = findViewById(R.id.img_profile);
             img_setting_more = findViewById(R.id.img_setting_more);
+
+            tv_name.setText(prefs.get_Val("name"));
+            tv_password.setText(prefs.get_Val("password"));
+            tv_email.setText(prefs.get_Val("email"));
+
         } catch (Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
         }
@@ -63,6 +71,17 @@ public class SettingActivity extends AppCompatActivity {
 
     private void onClick() {
         try {
+            lnr_sign_out.setOnClickListener(v -> {
+                try {
+                    prefs.Clear_Pref();
+                    Intent intent = new Intent(this, SplashActivity.class);
+                    startActivity(intent);
+                    finish();
+                } catch (Exception ex) {
+                    new DialogClass(this, "Exception", ex.getMessage());
+
+                }
+            });
             img_setting_more.setOnClickListener(v -> {
                 Intent intent = new Intent(this, ProfilePicActivity.class);
                 startActivity(intent);
@@ -89,10 +108,16 @@ public class SettingActivity extends AppCompatActivity {
                     final EditText et_old_pwd = view.findViewById(R.id.tv_old_pwd);
                     final EditText et_new_pwd = view.findViewById(R.id.tv_new_pwd);
                     final EditText et_new_confirm_pwd = view.findViewById(R.id.tv_new_confirm_pwd);
+                    et_old_pwd.setText(prefs.get_Val("password"));
                     final Button btn_Change = view.findViewById(R.id.btn_Change);
                     btn_Change.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (et_new_pwd.getText().toString().equals(et_new_confirm_pwd.getText().toString())) {
+
+                            } else {
+                                new DialogClass(context, "Error", "Both Password should be same");
+                            }
                         }
                     });
                     dialog.show();

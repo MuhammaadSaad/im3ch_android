@@ -328,14 +328,14 @@
                         android:text="Phone"
                         android:textColor="@color/black" />
 
-
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/lnr_sign_out"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50sp"
                     android:layout_marginBottom="15sp"
+                    android:background="@drawable/on_click_btn"
                     android:foreground="?android:selectableItemBackground"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -353,7 +353,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Sign Out"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>

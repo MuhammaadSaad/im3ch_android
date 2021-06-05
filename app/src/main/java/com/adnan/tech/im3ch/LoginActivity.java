@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.adnan.tech.im3ch.Model.ModelParams;
 import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.Api;
+import com.adnan.tech.im3ch.Util.BackgroundToast;
 import com.adnan.tech.im3ch.Util.DialogClass;
 import com.adnan.tech.im3ch.Util.Dialog_Loading;
 import com.adnan.tech.im3ch.Util.MyPrefs;
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             et_user_name = findViewById(R.id.et_user_name);
             et_pwd = findViewById(R.id.et_pwd);
             et_email = findViewById(R.id.et_email);
-
+            loading = new Dialog_Loading(this);
 
         } catch (Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     et_pwd.getText().toString().equals("") &&
                     et_email.getText().toString().equals(""))) {
                 if (isValidEmail(et_email.getText().toString())) {
-
+                    loading.show();
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     OkHttpClient client = new OkHttpClient();
@@ -106,11 +107,10 @@ public class LoginActivity extends AppCompatActivity {
                     String parameters = ParamGetter.getValue(params);
 
                     Log.e("test", "name=" + et_user_name.getText().toString() + "&password=" + et_pwd.getText().toString() + "&email=" + et_email.getText().toString());
-                    //RequestBody body = RequestBody.create(mediaType,"name=" + et_user_name.getText().toString() + "&password=" + et_pwd.getText().toString() + "&email=" + et_email.getText().toString() + "");//"name=sa&password=sa123456&email=sa@gmail.com"); //
                     RequestBody body = RequestBody.create(mediaType, parameters);//"name=sa&password=sa123456&email=sa@gmail.com"); //
-
+                    String url = new Api().URL + new Api().login;
                     Request request = new Request.Builder()
-                            .url(new Api().URL + new Api().login)
+                            .url(url)
                             .method("POST", body)
                             .addHeader("Content-Type", " application/x-www-form-urlencoded")
                             .build();
@@ -118,22 +118,30 @@ public class LoginActivity extends AppCompatActivity {
                             new Callback() {
                                 @Override
                                 public void onFailure(Request request, IOException e) {
+                                    loading.dismiss();
+                                    new BackgroundToast().showDialog(context,
+                                            "Error",
+                                            e.getMessage());
                                     e.printStackTrace();
                                 }
 
                                 @Override
                                 public void onResponse(Response response) {
+                                    loading.dismiss();
                                     Log.e("test", response.message());
-                                    if (!response.isSuccessful()) {
-                                        Intent intent = new Intent(context, HomeActivity.class);
+                                    Intent intent = new Intent(context, HomeActivity.class);
+                                    if (response.message().equalsIgnoreCase("OK")) {
+                                        prefs.put_Val("name", et_user_name.getText().toString());
+                                        prefs.put_Val("password", et_pwd.getText().toString());
+                                        prefs.put_Val("email", et_email.getText().toString());
                                         startActivity(intent);
                                     } else {
-
-                                        // do something wih the result
+                                        new BackgroundToast().showDialog(context,
+                                                "Error",
+                                                "Wrong Credentials");
                                     }
                                 }
                             });
-
                 } else {
                     Toast.makeText(this, "Enter valid Email", Toast.LENGTH_SHORT).show();
                 }
