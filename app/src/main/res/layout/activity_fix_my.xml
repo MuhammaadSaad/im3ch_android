@@ -27,7 +27,8 @@
             android:layout_height="150sp"
             android:layout_marginTop="50sp"
             android:alpha=".7"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,14 +61,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:background="@drawable/round_edit_text"
                     android:gravity="center"
                     android:padding="5dp"
                     android:singleLine="true"
                     android:text="Customer Car Details"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="25sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

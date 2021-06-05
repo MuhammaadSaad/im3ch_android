@@ -27,7 +27,8 @@
             android:layout_height="150sp"
             android:layout_marginTop="50sp"
             android:alpha=".7"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -199,9 +200,9 @@
                     android:drawableRight="@drawable/ic_arrow_drop"
                     android:foreground="?android:selectableItemBackground"
                     android:gravity="center"
+                    android:hint="Gender"
                     android:padding="5dp"
                     android:singleLine="true"
-                    android:text="Gender"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
                     android:textSize="18sp" />
