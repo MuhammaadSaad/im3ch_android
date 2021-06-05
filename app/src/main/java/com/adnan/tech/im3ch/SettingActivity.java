@@ -63,6 +63,7 @@ public class SettingActivity extends AppCompatActivity {
             tv_name.setText(prefs.get_Val("name"));
             tv_password.setText(prefs.get_Val("password"));
             tv_email.setText(prefs.get_Val("email"));
+
         } catch (Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
         }
@@ -112,6 +113,11 @@ public class SettingActivity extends AppCompatActivity {
                     btn_Change.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (et_new_pwd.getText().toString().equals(et_new_confirm_pwd.getText().toString())) {
+
+                            } else {
+                                new DialogClass(context, "Error", "Both Password should be same");
+                            }
                         }
                     });
                     dialog.show();
