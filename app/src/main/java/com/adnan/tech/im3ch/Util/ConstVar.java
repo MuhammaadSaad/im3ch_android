@@ -19,4 +19,7 @@ public class ConstVar {
 
     public static final String Mechanic  = "Mechanic";
     public static final String Type  = "Type";
+
+
+    public static final String pref_LatLng   = "pref_LatLng";
 }

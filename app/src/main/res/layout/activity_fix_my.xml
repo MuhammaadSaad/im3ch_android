@@ -170,9 +170,10 @@
                 android:background="@drawable/round_edit_text">
 
                 <EditText
+                    android:id="@+id/et_location"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:drawableRight="@drawable/ic_location"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:hint="Add Location"
                     android:inputType="text"
@@ -180,6 +181,15 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/img_location"
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/on_click_btn"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_location" />
 
             </LinearLayout>
 
