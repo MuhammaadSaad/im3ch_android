@@ -279,6 +279,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onResponse(Response response) {
+                                    String s = response.toString();
                                     Log.e("test", response.message());
                                     Intent intent = new Intent(context, HomeActivity.class);
                                     startActivity(intent);
