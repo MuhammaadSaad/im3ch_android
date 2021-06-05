@@ -1,10 +1,15 @@
 package com.adnan.tech.im3ch;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.adnan.tech.im3ch.Model.ModelAddress;
 import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.ConstVar;
 import com.adnan.tech.im3ch.Util.DialogClass;
+import com.adnan.tech.im3ch.Util.GSON_Module;
 import com.adnan.tech.im3ch.Util.MyPrefs;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -30,11 +37,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MapActivity extends AppCompatActivity implements
-        GoogleMap.OnMapLongClickListener {
+        GoogleMap.OnMapClickListener {
 
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
@@ -44,6 +52,7 @@ public class MapActivity extends AppCompatActivity implements
     Button btn_ok;
     MyPrefs prefs;
     Geocoder geocoder;
+    String address, lat_long;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +62,11 @@ public class MapActivity extends AppCompatActivity implements
         btn_ok = findViewById(R.id.btn_done);
         prefs = new MyPrefs(this);
 
+        address = getIntent().getStringExtra("address");
+        lat_long = getIntent().getStringExtra("lat_long");
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prefs.put_Val(ConstVar.pref_Address, tv_address.getText().toString().trim());
-                prefs.put_Val(ConstVar.pref_LatLng, latLng.latitude + ":" + latLng.longitude);
                 Toast.makeText(MapActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
@@ -97,34 +106,61 @@ public class MapActivity extends AppCompatActivity implements
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
                             mMap = googleMap;
-                            if (!prefs.get_Val(ConstVar.pref_LatLng).equalsIgnoreCase("")) {
+                            if (lat_long != null) {
                                 String[] ltlng = prefs.get_Val(ConstVar.pref_LatLng).split(":");
                                 latLng = new LatLng(Double.parseDouble(ltlng[0]), Double.parseDouble(ltlng[1]));
                             } else {
                                 if (location != null) {
                                     latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 } else {
-                                    latLng = new LatLng(25.2048, 55.2708);
+                                    latLng = new LatLng(25.072527, 67.2675832);
                                 }
                             }
-
 
                             MarkerOptions options = new MarkerOptions().position(latLng).title("My Location");
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                             googleMap.addMarker(options);
-                            mMap.setOnMapLongClickListener(MapActivity.this);
+                            mMap.setOnMapClickListener(MapActivity.this);
 
                             getAddress();
+                            final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+                            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                                buildAlertMessageNoGps();
+                            } else {
+                                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                                        PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                    return;
+                                }
+                            }
+                            googleMap.setMyLocationEnabled(true);
                         }
                     });
                 }
-
             });
         } catch (
                 Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
         }
+    }
 
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
@@ -137,12 +173,12 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng) {
+    public void onMapClick(LatLng latLng) {
         this.latLng = latLng;
-        handleMapLongClick(latLng);
+        handleMapClick(latLng);
     }
 
-    private void handleMapLongClick(LatLng latLng) {
+    private void handleMapClick(LatLng latLng) {
         try {
             mMap.clear();
             MarkerOptions markerOptions = new MarkerOptions().position(latLng);
@@ -167,7 +203,21 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
+        ArrayList<ModelAddress> lst_address = new ArrayList<>();
+        lst_address.add(new ModelAddress("" + tv_address.getText().toString().trim(),
+                "" + latLng.latitude + ":" + latLng.longitude));
+        GSON_Module gson = new GSON_Module();
+        String val = gson._put_address(lst_address);
+        Intent intent = new Intent();
+        intent.putExtra("val", val);
+        setResult(RESULT_OK, intent);
+        new Anim().Back(this);
+        finish();
+    }
+
+    /*@Override
+    public void onBackPressed() {
         super.onBackPressed();
         new Anim().Back(this);
-    }
+    }*/
 }
