@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
             prefs = new MyPrefs(this);
 
             btn_login = findViewById(R.id.btn_login);
-
             et_user_name = findViewById(R.id.et_user_name);
             et_pwd = findViewById(R.id.et_pwd);
             et_email = findViewById(R.id.et_email);
