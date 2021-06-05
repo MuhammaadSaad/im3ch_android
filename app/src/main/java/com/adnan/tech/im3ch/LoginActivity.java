@@ -132,8 +132,8 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(context, HomeActivity.class);
                                     if (response.message().equalsIgnoreCase("OK")) {
                                         prefs.put_Val("name", et_user_name.getText().toString());
-                                        prefs.put_Val("password", et_user_name.getText().toString());
-                                        prefs.put_Val("email", et_user_name.getText().toString());
+                                        prefs.put_Val("password", et_pwd.getText().toString());
+                                        prefs.put_Val("email", et_email.getText().toString());
                                         startActivity(intent);
                                     } else {
                                         new BackgroundToast().showDialog(context,
