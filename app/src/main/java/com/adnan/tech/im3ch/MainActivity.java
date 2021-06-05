@@ -2,6 +2,7 @@ package com.adnan.tech.im3ch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -11,6 +12,15 @@ import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.AppPermission;
 import com.adnan.tech.im3ch.Util.ConstVar;
 import com.adnan.tech.im3ch.Util.DialogClass;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_signUp_Mechanic, btn_signUp_Customer;
@@ -43,6 +53,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick() {
         btn_signUp_Mechanic.setOnClickListener(v -> {
+            /*OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url("http://192.168.0.149:8080/Fix/60b1f5590d2e2f3d38ecceff")
+                    .method("GET", null).build();
+            client.newCall(request).enqueue(
+                    new Callback() {
+                        @Override
+                        public void onFailure(Request request, IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Response response) {
+
+                            Log.e("test",  response.body().toString());
+                            String jsonData = null;
+                            try {
+                                jsonData = response.body().string();
+                                JSONObject Jobject = new JSONObject(jsonData);
+
+                            } catch (IOException | JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+            */
             Intent intent = new Intent(this, SignUpActivity.class);
             intent.putExtra(ConstVar.Type, ConstVar.Mechanic);
             startActivity(intent);

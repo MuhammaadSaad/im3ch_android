@@ -124,10 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Response response) {
                                     Log.e("test", response.message());
-                                    Intent intent = new Intent(context, HomeActivity.class);
-                                    startActivity(intent);
                                     if (!response.isSuccessful()) {
-                                        intent = new Intent(context, HomeActivity.class);
+                                        Intent intent = new Intent(context, HomeActivity.class);
                                         startActivity(intent);
                                     } else {
 
