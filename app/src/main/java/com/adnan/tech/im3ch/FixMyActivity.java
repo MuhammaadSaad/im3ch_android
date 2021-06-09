@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,8 +18,9 @@ import java.util.ArrayList;
 public class FixMyActivity extends AppCompatActivity {
     EditText et_location;
     MyPrefs prefs;
-    ImageView img_location;
+    ImageView img_location, img_item;
     String address, lat_long;
+    static int PICK_FROM_GALLERY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +31,28 @@ public class FixMyActivity extends AppCompatActivity {
         prefs = new MyPrefs(this);
         et_location = findViewById(R.id.et_location);
         img_location = findViewById(R.id.img_location);
+        img_item = findViewById(R.id.img_item);
+        img_item.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, PICK_FROM_GALLERY);
+            } catch (Exception ex) {
+
+            }
+        });
         img_location.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapActivity.class);
             intent.putExtra("address", address);
             intent.putExtra("lat_long", lat_long);
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, 2);
         });
     }
 
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
                 String val = data.getStringExtra("val");
                 GSON_Module gson = new GSON_Module();
@@ -48,6 +61,14 @@ public class FixMyActivity extends AppCompatActivity {
                 lat_long = lst_address.get(0).getLat_long();
                 et_location.setText(address);
 
+            }
+
+        }
+        if (resultCode == RESULT_OK && requestCode == PICK_FROM_GALLERY) {
+            try {
+                img_item.setImageURI(data.getData());
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }

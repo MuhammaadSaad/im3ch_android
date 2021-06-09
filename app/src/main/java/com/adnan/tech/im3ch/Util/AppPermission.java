@@ -16,7 +16,8 @@ public class AppPermission {
     private String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
             Manifest.permission.CALL_PHONE,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
     public AppPermission(Context context, Activity activity) {

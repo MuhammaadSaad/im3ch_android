@@ -373,7 +373,8 @@
                 android:background="@drawable/on_click_btn"
                 android:text="Next"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"

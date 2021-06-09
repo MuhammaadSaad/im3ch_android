@@ -22,6 +22,18 @@
             android:alpha=".5"
             android:background="@color/grey" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:padding="5sp"
+            android:singleLine="true"
+            android:text="I FIX RIDE"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,9 +45,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="150sp"
-                android:visibility="gone"
                 android:layout_marginBottom="30sp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -43,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
                 android:layout_marginRight="20sp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -60,7 +73,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:orientation="vertical">
 
                 <EditText
@@ -81,7 +96,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <EditText
@@ -90,11 +107,13 @@
                     android:layout_height="50sp"
                     android:background="@null"
                     android:gravity="center"
+
                     android:hint="Budget"
                     android:padding="5dp"
                     android:singleLine="true"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white" />
             </LinearLayout>
 
             <Button

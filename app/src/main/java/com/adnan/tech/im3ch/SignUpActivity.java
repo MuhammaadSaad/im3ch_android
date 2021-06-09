@@ -133,11 +133,6 @@ public class SignUpActivity extends AppCompatActivity {
                                                         new BackgroundToast().showDialog(context,
                                                                 "Message",
                                                                 "Registered Successfully");
-                                                        et_email.setText("");
-                                                        et_pwd.setText("");
-                                                        et_number.setText("");
-                                                        et_user_name.setText("");
-                                                        tv_gender.setText("");
                                                     } else {
                                                         new BackgroundToast().showDialog(context,
                                                                 "Error",
@@ -169,8 +164,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
     }
-
-
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
