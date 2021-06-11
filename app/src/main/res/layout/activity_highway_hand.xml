@@ -34,13 +34,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="280sp"
-            android:orientation="vertical">
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,6 +42,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/lnr_fuel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:foreground="?android:selectableItemBackground"
@@ -78,6 +72,7 @@
                 android:background="#03A9F4" />
 
             <LinearLayout
+                android:id="@+id/lnr_tires"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:foreground="?android:selectableItemBackground"
@@ -107,7 +102,7 @@
                 android:background="#03A9F4" />
 
             <LinearLayout
-                android:id="@+id/btn_jump_start"
+                android:id="@+id/lnr_jump_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:foreground="?android:selectableItemBackground"

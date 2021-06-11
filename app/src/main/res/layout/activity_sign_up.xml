@@ -27,7 +27,8 @@
             android:layout_height="150sp"
             android:layout_marginTop="50sp"
             android:alpha=".7"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +92,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <EditText
@@ -115,7 +118,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <EditText
@@ -131,6 +136,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -139,7 +145,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <EditText
@@ -155,6 +163,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -163,7 +172,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <EditText
@@ -171,6 +182,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:background="@null"
+
                     android:drawableLeft="@drawable/ic_iphone"
                     android:gravity="center"
                     android:hint="Phone number"
@@ -180,6 +192,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -188,7 +201,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <TextView
@@ -199,11 +214,12 @@
                     android:drawableRight="@drawable/ic_arrow_drop"
                     android:foreground="?android:selectableItemBackground"
                     android:gravity="center"
+                    android:hint="Gender"
                     android:padding="5dp"
                     android:singleLine="true"
-                    android:text="Gender"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white"
                     android:textSize="18sp" />
             </LinearLayout>
 

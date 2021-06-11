@@ -27,7 +27,8 @@
             android:layout_height="150sp"
             android:layout_marginTop="50sp"
             android:alpha=".7"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
                 android:layout_marginRight="20sp"
-                android:background="@drawable/round_edit_text">
+                android:background="@drawable/round_edit_text"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/et_user_name"
@@ -79,31 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:layout_marginRight="20sp"
-                android:background="@drawable/round_edit_text">
-
-                <EditText
-                    android:id="@+id/et_pwd"
-                    android:layout_width="match_parent"
-                    android:layout_height="50sp"
-                    android:background="@null"
-                    android:drawableLeft="@drawable/ic_key"
-                    android:gravity="center"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="5dp"
-                    android:singleLine="true"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/light_grey"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20sp"
-                android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
                 android:background="@drawable/round_edit_text">
 
                 <EditText
@@ -119,7 +99,35 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white"
                     android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginBottom="2sp"
+                android:background="@drawable/round_edit_text">
+
+                <EditText
+                    android:id="@+id/et_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_key"
+                    android:gravity="center"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="5dp"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/light_grey"
+                    android:textCursorDrawable="@drawable/color_cursor_white"
+                    android:textSize="18sp" />
+
             </LinearLayout>
 
 

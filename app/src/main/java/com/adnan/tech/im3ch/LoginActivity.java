@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public class LoginActivity extends AppCompatActivity {
     Dialog_Loading loading;
     Button btn_login;
-    EditText et_user_name, et_pwd, et_email;
+    EditText et_pwd, et_email;
     MyPrefs prefs;
     Context context;
 
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             prefs = new MyPrefs(this);
 
             btn_login = findViewById(R.id.btn_login);
-            et_user_name = findViewById(R.id.et_user_name);
+
             et_pwd = findViewById(R.id.et_pwd);
             et_email = findViewById(R.id.et_email);
             loading = new Dialog_Loading(this);
@@ -90,29 +90,27 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onClick(View v) {
         try {
-            if (!(et_user_name.getText().toString().equals("") &&
-                    et_pwd.getText().toString().equals("") &&
+            if (!(et_pwd.getText().toString().equals("") &&
                     et_email.getText().toString().equals(""))) {
                 if (isValidEmail(et_email.getText().toString())) {
                     loading.show();
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
                     OkHttpClient client = new OkHttpClient();
-                    MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
+                    MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
                     ArrayList<ModelParams> params = new ArrayList<>();
-                    params.add(new ModelParams("name", et_user_name.getText().toString()));
-                    params.add(new ModelParams("password", et_pwd.getText().toString()));
-                    params.add(new ModelParams("email", et_email.getText().toString()));
+                    params.add(new ModelParams("name", "adnan".toLowerCase()));
+                    params.add(new ModelParams("password", et_pwd.getText().toString().toLowerCase()));
+                    params.add(new ModelParams("email", et_email.getText().toString().toLowerCase()));
                     String parameters = ParamGetter.getValue(params);
 
-                    Log.e("test", "name=" + et_user_name.getText().toString() + "&password=" + et_pwd.getText().toString() + "&email=" + et_email.getText().toString());
                     RequestBody body = RequestBody.create(mediaType, parameters);//"name=sa&password=sa123456&email=sa@gmail.com"); //
                     String url = new Api().URL + new Api().login;
                     Request request = new Request.Builder()
                             .url(url)
                             .method("POST", body)
-                            .addHeader("Content-Type", " application/x-www-form-urlencoded")
+                            .addHeader("Content-Type", "application/x-www-form-urlencoded")
                             .build();
                     client.newCall(request).enqueue(
                             new Callback() {
@@ -127,18 +125,24 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onResponse(Response response) {
-                                    loading.dismiss();
-                                    Log.e("test", response.message());
-                                    Intent intent = new Intent(context, HomeActivity.class);
-                                    if (response.message().equalsIgnoreCase("OK")) {
-                                        prefs.put_Val("name", et_user_name.getText().toString());
-                                        prefs.put_Val("password", et_pwd.getText().toString());
-                                        prefs.put_Val("email", et_email.getText().toString());
-                                        startActivity(intent);
-                                    } else {
+                                    try {
+                                        loading.dismiss();
+                                        Log.e("test", response.message());
+                                        Intent intent = new Intent(context, HomeActivity.class);
+                                        if (response.message().equalsIgnoreCase("OK")) {
+                                            //prefs.put_Val("name", et_user_name.getText().toString());
+                                            prefs.put_Val("password", et_pwd.getText().toString());
+                                            prefs.put_Val("email", et_email.getText().toString());
+                                            startActivity(intent);
+                                        } else {
+                                            new BackgroundToast().showDialog(context,
+                                                    "Error",
+                                                    "Wrong Credentials");
+                                        }
+                                    } catch (Exception ex) {
                                         new BackgroundToast().showDialog(context,
                                                 "Error",
-                                                "Wrong Credentials");
+                                                ex.getMessage());
                                     }
                                 }
                             });

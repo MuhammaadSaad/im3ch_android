@@ -2,7 +2,6 @@ package com.adnan.tech.im3ch;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,8 +16,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.adnan.tech.im3ch.Model.ModelParams;
 import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.Api;
+import com.adnan.tech.im3ch.Util.BackgroundToast;
 import com.adnan.tech.im3ch.Util.ConstVar;
 import com.adnan.tech.im3ch.Util.DialogClass;
+import com.adnan.tech.im3ch.Util.Dialog_Loading;
+import com.adnan.tech.im3ch.Util.ParamGetter;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import com.adnan.tech.im3ch.Util.ParamGetter;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -34,11 +45,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
-
+    Dialog_Loading loading;
     Button btn_sign_up;
     TextView tv_type, tv_gender;
     EditText et_user_name, et_pwd, et_email, et_number;
     Context context;
+
     String Type="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +68,9 @@ public class SignUpActivity extends AppCompatActivity {
     private void Init() {
         try {
             new Anim().Entry(this);
+            loading = new Dialog_Loading(this);
             btn_sign_up = findViewById(R.id.btn_sign_up);
-            context=this;
+            context = this;
             tv_type = findViewById(R.id.tv_type);
             tv_gender = findViewById(R.id.tv_gender);
 
@@ -96,49 +109,54 @@ public class SignUpActivity extends AppCompatActivity {
                             et_number.getText().toString().equals(""))) {
                         if (et_pwd.getText().toString().length() > 8) {
                             if (isValidEmail(et_email.getText().toString())) {
+                                loading.show();
                                 OkHttpClient client = new OkHttpClient();
-                                MediaType mediaType = MediaType.parse(" application/x-www-form-urlencoded");
+                                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
                                 ArrayList<ModelParams> params = new ArrayList<>();
-                                params.add(new ModelParams("choice", Type));
-                                params.add(new ModelParams("name1", et_user_name.getText().toString()));
-                                params.add(new ModelParams("password1", et_pwd.getText().toString()));
-                                params.add(new ModelParams("email1", et_email.getText().toString()));
-                                params.add(new ModelParams("phone1", et_number.getText().toString()));
-                                params.add(new ModelParams("gender1", "male"));
+                                params.add(new ModelParams("choice", tv_type.getText().toString().toLowerCase()));
+                                params.add(new ModelParams("name1", et_user_name.getText().toString().toLowerCase()));
+                                params.add(new ModelParams("password1", et_pwd.getText().toString().toLowerCase()));
+                                params.add(new ModelParams("email1", et_email.getText().toString().toLowerCase()));
+                                params.add(new ModelParams("phone1", et_number.getText().toString().toLowerCase()));
+                                params.add(new ModelParams("gender1", tv_gender.getText().toString().toLowerCase()));
                                 String parameters = ParamGetter.getValue(params);
-                                Log.e("params",parameters);
-                                //"?choice=Customer&name1=Local Business &password1=444444444&email1=dryera@fddd.com&phone1=44224&gender1=male
-                                RequestBody body = RequestBody.create(mediaType, "choice=Customer&name1=Local Business&password1=444444444&email1=dryera@fddd.com&phone1=44224&gender1=male");
+                                Log.e("params", parameters);
+                                RequestBody body = RequestBody.create(mediaType,
+                                        parameters);
                                 Request request = new Request.Builder()
                                         .url(new Api().URL + new Api().signup)
                                         .method("POST", body)
-                                        .addHeader("Content-Type", " application/x-www-form-urlencoded")
+                                        .addHeader("Content-Type", "application/x-www-form-urlencoded")
                                         .build();
                                 client.newCall(request).enqueue(
                                         new Callback() {
                                             @Override
                                             public void onFailure(Request request, IOException e) {
+                                                loading.dismiss();
+                                                new BackgroundToast().showDialog(context,
+                                                        "Error",
+                                                        e.getMessage());
                                                 e.printStackTrace();
                                             }
 
                                             @Override
                                             public void onResponse(Response response) {
-                                                if (!response.isSuccessful()) {
-
-                                                    Log.e("test", response.body().toString());
-                                                    String jsonData = null;
-                                                    try {
-                                                        jsonData = response.body().string();
-                                                        JSONObject Jobject = new JSONObject(jsonData);
-                                                        Log.e("error",Jobject.getString("message"));
-                                                        Log.e("error",Jobject.getString("error"));
-                                                    } catch (IOException | JSONException e) {
-                                                        e.printStackTrace();
+                                                try {
+                                                    loading.dismiss();
+                                                    Log.e("test", response.message());
+                                                    if (response.message().equalsIgnoreCase("Created")) {
+                                                        new BackgroundToast().showDialog(context,
+                                                                "Message",
+                                                                "Registered Successfully");
+                                                    } else {
+                                                        new BackgroundToast().showDialog(context,
+                                                                "Error",
+                                                                "Wrong Credentials");
                                                     }
-
-                                                } else {
-
-                                                    // do something wih the result
+                                                } catch (Exception ex) {
+                                                    new BackgroundToast().showDialog(context,
+                                                            "Error",
+                                                            ex.getMessage());
                                                 }
                                             }
                                         });
@@ -160,14 +178,6 @@ public class SignUpActivity extends AppCompatActivity {
             new DialogClass(this, "Exception", ex.getMessage());
         }
 
-    }
-
-    public void funSignUp(){
-        try{
-
-        }catch (Exception ex){
-
-        }
     }
 
     public static boolean isValidEmail(CharSequence target) {
