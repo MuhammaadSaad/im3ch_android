@@ -28,6 +28,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -127,7 +128,10 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(Response response) {
                                     try {
                                         loading.dismiss();
-                                        Log.e("test", response.message());
+                                        ResponseBody rebody = response.body();
+                                        String responseb = rebody.string();
+
+                                        Log.e("test",  responseb);
                                         Intent intent = new Intent(context, HomeActivity.class);
                                         if (response.message().equalsIgnoreCase("OK")) {
                                             //prefs.put_Val("name", et_user_name.getText().toString());

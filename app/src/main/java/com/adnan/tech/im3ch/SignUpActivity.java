@@ -37,6 +37,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -143,7 +144,10 @@ public class SignUpActivity extends AppCompatActivity {
                                             public void onResponse(Response response) {
                                                 try {
                                                     loading.dismiss();
-                                                    Log.e("test", response.message());
+                                                    ResponseBody rebody = response.body();
+                                                    String responseb = rebody.string();
+
+                                                    Log.e("test",  responseb);
                                                     if (response.message().equalsIgnoreCase("Created")) {
                                                         new BackgroundToast().showDialog(context,
                                                                 "Message",
