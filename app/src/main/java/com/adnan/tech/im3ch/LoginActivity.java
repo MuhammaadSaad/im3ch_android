@@ -30,6 +30,8 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -132,11 +134,22 @@ public class LoginActivity extends AppCompatActivity {
                                         String responseb = rebody.string();
 
                                         Log.e("test",  responseb);
-                                        Intent intent = new Intent(context, HomeActivity.class);
-                                        if (response.message().equalsIgnoreCase("OK")) {
-                                            //prefs.put_Val("name", et_user_name.getText().toString());
-                                            prefs.put_Val("password", et_pwd.getText().toString());
-                                            prefs.put_Val("email", et_email.getText().toString());
+                                        JSONObject json = new JSONObject(responseb);
+                                        System.out.println(json.toString());
+                                        String message = json.getString("message");
+                                        if (message.equalsIgnoreCase("user login successfully")) {
+                                            JSONObject data = json.getJSONObject("data");
+                                            prefs.put_Val("id",data.getString("id"));
+                                            prefs.put_Val("choice",data.getString("choice"));
+                                            prefs.put_Val("name",data.getString("name"));
+                                            prefs.put_Val("password",data.getString("password"));
+                                            prefs.put_Val("email",data.getString("email"));
+                                            prefs.put_Val("phone",data.getString("phoneno"));
+                                            prefs.put_Val("gender",data.getString("gender"));
+                                            new BackgroundToast().showDialog(context,
+                                                    "Message",
+                                                    "Login Successfully");
+                                            Intent intent = new Intent(context, HomeActivity.class);
                                             startActivity(intent);
                                         } else {
                                             new BackgroundToast().showDialog(context,

@@ -2,6 +2,7 @@ package com.adnan.tech.im3ch;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.adnan.tech.im3ch.Util.BackgroundToast;
 import com.adnan.tech.im3ch.Util.ConstVar;
 import com.adnan.tech.im3ch.Util.DialogClass;
 import com.adnan.tech.im3ch.Util.Dialog_Loading;
+import com.adnan.tech.im3ch.Util.MyPrefs;
 import com.adnan.tech.im3ch.Util.ParamGetter;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -51,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextView tv_type, tv_gender;
     EditText et_user_name, et_pwd, et_email, et_number;
     Context context;
-
+    MyPrefs prefs;
     String Type="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
             context = this;
             tv_type = findViewById(R.id.tv_type);
             tv_gender = findViewById(R.id.tv_gender);
-
+            prefs = new MyPrefs(this);
             et_user_name = findViewById(R.id.et_user_name);
             et_pwd = findViewById(R.id.et_pwd);
             et_email = findViewById(R.id.et_email);
@@ -146,12 +148,26 @@ public class SignUpActivity extends AppCompatActivity {
                                                     loading.dismiss();
                                                     ResponseBody rebody = response.body();
                                                     String responseb = rebody.string();
-
-                                                    Log.e("test",  responseb);
-                                                    if (response.message().equalsIgnoreCase("Created")) {
+                                                    Log.e("test",  responseb);// {"message":"data is saved successfully","data":{"_id":"60cc25b2f40fbb2e8c215ccb","choice":"mechanic","name1":"bello","password1":"123456789","phone1":"18937899","email1":"gft@gm.com","gender1":"male","tokens":[],"__v":0}}
+                                                    JSONObject json = new JSONObject(responseb);
+                                                    System.out.println(json.toString());
+                                                    String message = json.getString("message");
+                                                    if (message.equalsIgnoreCase("Created")) {
+                                                        JSONObject data = json.getJSONObject("data");
+                                                        prefs.put_Val("id",data.getString("_id"));
+                                                        prefs.put_Val("choice",data.getString("choice"));
+                                                        prefs.put_Val("name",data.getString("name1"));
+                                                        prefs.put_Val("password",data.getString("password1"));
+                                                        prefs.put_Val("email",data.getString("email1"));
+                                                        prefs.put_Val("phone",data.getString("phone1"));
+                                                        prefs.put_Val("gender",data.getString("gender1"));
                                                         new BackgroundToast().showDialog(context,
                                                                 "Message",
                                                                 "Registered Successfully");
+                                                        Intent intent = new Intent(context, HomeActivity.class);
+                                                        startActivity(intent);
+                                                       /* prefs.put_Val("password", et_pwd.getText().toString());
+                                                        prefs.put_Val("email", et_email.getText().toString());*/
                                                     } else {
                                                         new BackgroundToast().showDialog(context,
                                                                 "Error",

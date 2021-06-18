@@ -60,7 +60,28 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="2sp"
+                        android:layout_marginRight="20sp"
+                        android:layout_marginBottom="2sp"
+                        android:background="@drawable/round_edit_text">
 
+                        <EditText
+                            android:id="@+id/tv_car_makr"
+                            android:layout_width="match_parent"
+                            android:layout_height="50sp"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:inputType="text"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            android:text="Car Make"
+                            android:textColor="@android:color/white"
+                            android:textColorHint="@color/white" />
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -118,7 +139,7 @@
                         android:background="@drawable/round_edit_text">
 
                         <EditText
-                            android:id="@+id/et_user_name"
+                            android:id="@+id/et_budget"
                             android:layout_width="match_parent"
                             android:layout_height="50sp"
                             android:background="@null"
@@ -134,6 +155,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:id="@+id/rdgrp"
                         android:layout_width="match_parent"
                         android:layout_height="50sp"
                         android:layout_marginLeft="20sp"
@@ -141,6 +163,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/our_side"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -149,6 +172,7 @@
                             android:textColor="@android:color/white" />
 
                         <RadioButton
+                            android:id="@+id/in_side"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -205,6 +229,7 @@
                         android:background="@drawable/round_edit_text">
 
                         <EditText
+                            android:id="@+id/description"
                             android:layout_width="match_parent"
                             android:layout_height="50sp"
                             android:background="@null"
@@ -230,7 +255,7 @@
                         <ImageView
                             android:id="@+id/img_item"
                             android:layout_width="match_parent"
-                            android:layout_height="200sp"
+                            android:layout_height="180sp"
                             android:background="#FFFFFF"
                             android:src="@drawable/ic_add_photo" />
                     </androidx.cardview.widget.CardView>
