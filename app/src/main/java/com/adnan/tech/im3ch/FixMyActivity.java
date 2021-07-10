@@ -31,10 +31,13 @@ import com.squareup.okhttp.ResponseBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import okio.BufferedSink;
 
 public class FixMyActivity extends AppCompatActivity {
     EditText et_location,et_make,et_model,et_year,et_budget,et_description;
@@ -72,9 +75,45 @@ public class FixMyActivity extends AppCompatActivity {
                 description=et_description.getText().toString();
                 if(!(location.isEmpty()&&make.isEmpty()&&model.isEmpty()&&year.isEmpty()&&budget.isEmpty()&&description.isEmpty())) {
                     OkHttpClient client = new OkHttpClient();
+                    MediaType mediaTypee = MediaType.parse("text/plain");
+                    RequestBody bodye = new RequestBody() {
+                        @Override
+                        public MediaType contentType() {
+                            return null;
+                        }
+
+                        @Override
+                        public void writeTo(BufferedSink sink) throws IOException {
+
+                        }
+                    }; /*new  MultipartBody.Builder().setType(MultipartBody.FORM)
+                            .addFormDataPart("file","/C:/Users/root/Pictures/Capture.PNG",
+                                    RequestBody.create(MediaType.parse("application/octet-stream"),
+                                            new File("/C:/Users/root/Pictures/Capture.PNG")))
+                            .build();*/
+                    Request requeste = new Request.Builder()
+                            .url("http://localhost:8081/upload")
+                            .method("POST", bodye)
+                            .build();
+                    client.newCall(requeste).enqueue(
+                            new Callback() {
+
+                                @Override
+                                public void onFailure(Request request, IOException e) {
+
+                                }
+
+                                @Override
+                                public void onResponse(Response response) throws IOException {
+
+                                }
+                            });
+
+
                     MediaType mediaType = MediaType.parse("application/json");
                     JSONObject jsonObject = new JSONObject();
                     try {
+
                         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                         jsonObject.put("make", make);
                         jsonObject.put("model", model);
