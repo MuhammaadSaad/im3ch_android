@@ -63,7 +63,7 @@ public class SettingActivity extends AppCompatActivity {
             tv_name.setText(prefs.get_Val("name"));
             tv_password.setText(prefs.get_Val("password"));
             tv_email.setText(prefs.get_Val("email"));
-
+            tv_phone.setText(prefs.get_Val("phone"));
         } catch (Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
         }
