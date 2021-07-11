@@ -19,4 +19,8 @@
     <color name="sample">#d498af</color>
     <color name="btn_click">#0585B8</color>
     <color name="btn_un_click">#079EDA</color>
+
+    <color name="gradientOrange">#FF416C</color>
+    <color name="gradientViolet">#8A52E9</color>
+    <color name="gradientLightYellow">#FFA72F</color>
 </resources>

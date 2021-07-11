@@ -98,6 +98,17 @@
                     android:foreground="?android:selectableItemBackground" />
 
                 <ImageView
+                    android:id="@+id/btn_find_mechanic"
+                    android:layout_width="200dp"
+                    android:layout_height="70sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/towing"
+                    android:foreground="?android:selectableItemBackground" />
+
+                <ImageView
                     android:id="@+id/btn_highway_hand"
                     android:layout_width="200dp"
                     android:layout_height="70sp"
@@ -107,6 +118,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@drawable/btn_highway_hand"
                     android:foreground="?android:selectableItemBackground" />
+
 
             </LinearLayout>
         </LinearLayout>

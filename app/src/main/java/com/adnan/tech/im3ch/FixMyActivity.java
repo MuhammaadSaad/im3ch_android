@@ -72,6 +72,7 @@ public class FixMyActivity extends AppCompatActivity {
                 description=et_description.getText().toString();
                 if(!(location.isEmpty()&&make.isEmpty()&&model.isEmpty()&&year.isEmpty()&&budget.isEmpty()&&description.isEmpty())) {
                     OkHttpClient client = new OkHttpClient();
+                    MediaType mediaType = MediaType.parse("application/json");
                     JSONObject jsonObject = new JSONObject();
                     try {
                         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
@@ -91,7 +92,6 @@ public class FixMyActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    MediaType mediaType = MediaType.parse("application/json");
                     RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
                     Request request = new Request.Builder()
                             .url(new Api().URL + "car")

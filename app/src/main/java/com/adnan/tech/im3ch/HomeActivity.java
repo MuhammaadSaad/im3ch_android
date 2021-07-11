@@ -10,7 +10,7 @@ import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.DialogClass;
 
 public class HomeActivity extends AppCompatActivity {
-    ImageView img_setting, btn_fix_my_ride, btn_i_fix_ride, btn_highway_hand;
+    ImageView img_setting, btn_fix_my_ride, btn_i_fix_ride, btn_find_mechanic,btn_highway_hand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
             btn_fix_my_ride = findViewById(R.id.btn_fix_my_ride);
             btn_i_fix_ride = findViewById(R.id.btn_i_fix_ride);
             btn_highway_hand = findViewById(R.id.btn_highway_hand);
+            btn_find_mechanic=findViewById(R.id.btn_find_mechanic);
             img_setting = findViewById(R.id.img_setting);
         } catch (Exception ex) {
             new DialogClass(this, "Exception", ex.getMessage());
@@ -49,6 +50,10 @@ public class HomeActivity extends AppCompatActivity {
             });
             btn_highway_hand.setOnClickListener(v -> {
                 Intent intent = new Intent(this, HighwayHandActivity.class);
+                startActivity(intent);
+            });
+            btn_find_mechanic.setOnClickListener(v -> {
+                Intent intent = new Intent(this, FindMechanicActivity.class);
                 startActivity(intent);
             });
             img_setting.setOnClickListener(v -> {

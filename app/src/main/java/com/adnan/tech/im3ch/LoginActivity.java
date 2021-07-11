@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                             prefs.put_Val("name",data.getString("name"));
                                             prefs.put_Val("password",data.getString("password"));
                                             prefs.put_Val("email",data.getString("email"));
-                                            prefs.put_Val("phone",data.getString("phone"));
+                                            prefs.put_Val("phone",data.getString("phoneno"));
                                             prefs.put_Val("gender",data.getString("gender"));
                                             new BackgroundToast().showDialog(context,
                                                     "Message",
