@@ -31,13 +31,10 @@ import com.squareup.okhttp.ResponseBody;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import okio.BufferedSink;
 
 public class FixMyActivity extends AppCompatActivity {
     EditText et_location,et_make,et_model,et_year,et_budget,et_description;
@@ -113,7 +110,6 @@ public class FixMyActivity extends AppCompatActivity {
                     MediaType mediaType = MediaType.parse("application/json");
                     JSONObject jsonObject = new JSONObject();
                     try {
-
                         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                         jsonObject.put("make", make);
                         jsonObject.put("model", model);
@@ -131,6 +127,7 @@ public class FixMyActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    MediaType mediaType = MediaType.parse("application/json");
                     RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
                     Request request = new Request.Builder()
                             .url(new Api().URL + "car")
