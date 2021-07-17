@@ -27,21 +27,15 @@ import com.adnan.tech.im3ch.Util.GSON_Module;
 import com.adnan.tech.im3ch.Util.MyPrefs;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -51,6 +45,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 
 public class FixMyActivity extends AppCompatActivity {
     EditText et_location, et_make, et_model, et_year, et_budget, et_description;
@@ -78,6 +83,9 @@ public class FixMyActivity extends AppCompatActivity {
         img_location = findViewById(R.id.img_location);
         btn_submit = findViewById(R.id.btn_Next);
         img_item = findViewById(R.id.img_item);
+        OkHttpClient client = new OkHttpClient();
+        apiService = new Retrofit.Builder().baseUrl(new Api().URL + "upload/").client(client).build().create(ApiService.class);
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,9 +96,9 @@ public class FixMyActivity extends AppCompatActivity {
                 year = et_year.getText().toString();
                 budget = et_budget.getText().toString();
                 description = et_description.getText().toString();
-                uploadFile(fileuri);
+                multipartImageUpload();
                 if (!(location.isEmpty() && make.isEmpty() && model.isEmpty() && year.isEmpty() && budget.isEmpty() && description.isEmpty())) {
-                    uploadFile(fileuri);
+                    multipartImageUpload();
                     OkHttpClient client = new OkHttpClient();
                     MediaType mediaType = MediaType.parse("application/json");
                     JSONObject jsonObject = new JSONObject();
@@ -121,8 +129,7 @@ public class FixMyActivity extends AppCompatActivity {
                     client.newCall(request).enqueue(
                             new Callback() {
                                 @Override
-                                public void onFailure(Request request, IOException e) {
-                                    //loading.dismiss();
+                                public void onFailure(Call call, IOException e) {
                                     new BackgroundToast().showDialog(context,
                                             "Error",
                                             e.getMessage());
@@ -130,7 +137,9 @@ public class FixMyActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onResponse(Response response) {
+                                public void onResponse(Call call, Response response) throws IOException {
+
+                                                                    //loading.dismiss();
                                     try {
                                         //loading.dismiss();
                                         ResponseBody rebody = response.body();
@@ -191,15 +200,6 @@ public class FixMyActivity extends AppCompatActivity {
             }
 
         }
-        /*if (resultCode == RESULT_OK && requestCode == PICK_FROM_GALLERY) {
-            try {
-                fileuri = data.getData();
-
-                img_item.setImageURI(fileuri);
-            } catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }*/
     }
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
@@ -208,9 +208,9 @@ public class FixMyActivity extends AppCompatActivity {
                     try {
                         // Handle the returned Uri
                         String picturePath = convertMediaUriToPath(uri, context);
-                        Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                        mBitmap = (BitmapFactory.decodeFile(picturePath));
                         fileuri = picturePath;
-                        img_item.setImageBitmap(thumbnail);
+                        img_item.setImageBitmap(mBitmap);
                     }catch (Exception ex){
                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -251,8 +251,57 @@ public class FixMyActivity extends AppCompatActivity {
         super.onBackPressed();
         new Anim().Back(this);
     }
+    ApiService apiService;
+    Bitmap mBitmap;
+    private void multipartImageUpload() {
+        try {
+            File filesDir = getApplicationContext().getFilesDir();
+            File file = new File(filesDir, "image" + ".png");
 
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+
+
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
+
+            retrofit2.Call<ResponseBody> req = apiService.postImage(body, name);
+            req.enqueue(new retrofit2.Callback<ResponseBody>() {
+                @Override
+                public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getApplicationContext(), "Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+                }
+
+
+            });
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public int uploadFile(String sourceFileUri) {
+
         int serverResponseCode=0;
         String[] bits = sourceFileUri.split("/");
         String fileName = new Date().getTime() + bits[bits.length - 1];
