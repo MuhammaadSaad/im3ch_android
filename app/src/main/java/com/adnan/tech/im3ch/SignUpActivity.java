@@ -152,7 +152,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                     JSONObject json = new JSONObject(responseb);
                                                     System.out.println(json.toString());
                                                     String message = json.getString("message");
-                                                    if (message.equalsIgnoreCase("Created")) {
+                                                    if (message.equalsIgnoreCase("data is saved successfully")) {
                                                         JSONObject data = json.getJSONObject("data");
                                                         prefs.put_Val("id",data.getString("_id"));
                                                         prefs.put_Val("choice",data.getString("choice"));
@@ -171,7 +171,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                     } else {
                                                         new BackgroundToast().showDialog(context,
                                                                 "Error",
-                                                                "Wrong Credentials");
+                                                                "Error while Registering");
                                                     }
                                                 } catch (Exception ex) {
                                                     new BackgroundToast().showDialog(context,

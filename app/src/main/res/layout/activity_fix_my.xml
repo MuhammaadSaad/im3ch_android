@@ -78,7 +78,7 @@
                             android:inputType="text"
                             android:padding="5dp"
                             android:singleLine="true"
-                            android:text="Car Make"
+                            android:hint="Car Make"
                             android:textColor="@android:color/white"
                             android:textColorHint="@color/white" />
                     </LinearLayout>
@@ -100,7 +100,7 @@
                             android:inputType="text"
                             android:padding="5dp"
                             android:singleLine="true"
-                            android:text="Car Model"
+                            android:hint="Car Model"
                             android:textColor="@android:color/white"
                             android:textColorHint="@color/white" />
                     </LinearLayout>
@@ -124,7 +124,7 @@
                             android:maxLines="4"
                             android:padding="5dp"
                             android:singleLine="true"
-                            android:text="Car Year"
+                            android:hint="Car Year"
                             android:textColor="@android:color/white"
                             android:textColorHint="@color/white" />
                     </LinearLayout>
