@@ -96,7 +96,7 @@ public class FixMyActivity extends AppCompatActivity {
                 year = et_year.getText().toString();
                 budget = et_budget.getText().toString();
                 description = et_description.getText().toString();
-                multipartImageUpload();
+                //multipartImageUpload();
                 if (!(location.isEmpty() && make.isEmpty() && model.isEmpty() && year.isEmpty() && budget.isEmpty() && description.isEmpty())) {
                     multipartImageUpload();
                     OkHttpClient client = new OkHttpClient();
@@ -207,7 +207,7 @@ public class FixMyActivity extends AppCompatActivity {
                 public void onActivityResult(Uri uri) {
                     try {
                         // Handle the returned Uri
-                        String picturePath = convertMediaUriToPath(uri, context);
+                        String picturePath = convertMediaUriToPath(uri);
                         mBitmap = (BitmapFactory.decodeFile(picturePath));
                         fileuri = picturePath;
                         img_item.setImageBitmap(mBitmap);
@@ -217,17 +217,17 @@ public class FixMyActivity extends AppCompatActivity {
                 }
             });
 
-    String convertMediaUriToPath(Uri selectedImage, Context context ) {
+    String convertMediaUriToPath(Uri selectedImage ) {
         String[] filePath = { MediaStore.Images.Media.DATA };
         String[] bits = selectedImage.toString().split("/");
         String filename = new Date().getTime() + bits[bits.length - 1];
-        String picturePath="";
+        String picturePath=selectedImage.getPath();
         if (filename.contains("%3A")) {
             String id = filename.split("%3A")[1];
             // val type=filename.split("%3a", ignoreCase = true).get(0)
-            Uri t = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            Uri t = MediaStore.Images.Media.INTERNAL_CONTENT_URI;
             String sel = MediaStore.Images.Media._ID + "=?";
-            Cursor cursor = getContentResolver().query(
+            Cursor cursor =context.getContentResolver().query(
                     t,
                     filePath, sel, new String[]{id}, null
             );

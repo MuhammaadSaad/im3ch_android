@@ -9,12 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/splash_bg" />
-
         <View
             android:id="@+id/overlay_image"
             android:layout_width="match_parent"
@@ -79,6 +73,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/tv_discription"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:background="@drawable/round_edit_text"
@@ -91,6 +86,39 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <RadioGroup
+                android:id="@+id/rdgrp"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/our_side"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/white"
+                    android:text="Out Side"
+                    android:textColor="@android:color/white" />
+
+                <RadioButton
+                    android:id="@+id/in_side"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/white"
+                    android:text="In Side"
+                    android:textColor="@android:color/white" />
+
+            </RadioGroup>
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,12 +130,11 @@
                 android:background="@drawable/round_edit_text">
 
                 <EditText
-                    android:id="@+id/tv_car_model"
+                    android:id="@+id/tv_budget"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:background="@null"
                     android:gravity="center"
-
                     android:hint="Budget"
                     android:padding="5dp"
                     android:singleLine="true"
@@ -126,7 +153,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/on_click_btn"
-                android:text="Next"
+                android:text="Post Ad"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
 
