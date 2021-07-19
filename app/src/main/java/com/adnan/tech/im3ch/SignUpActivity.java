@@ -32,20 +32,10 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import com.adnan.tech.im3ch.Util.ParamGetter;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+
 import com.squareup.okhttp.ResponseBody;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
     Dialog_Loading loading;
@@ -77,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
             tv_type = findViewById(R.id.tv_type);
             tv_gender = findViewById(R.id.tv_gender);
             prefs = new MyPrefs(this);
-            et_user_name = findViewById(R.id.et_user_name);
+            et_user_name = findViewById(R.id.et_dis);
             et_pwd = findViewById(R.id.et_pwd);
             et_email = findViewById(R.id.et_email);
             et_number = findViewById(R.id.et_number);

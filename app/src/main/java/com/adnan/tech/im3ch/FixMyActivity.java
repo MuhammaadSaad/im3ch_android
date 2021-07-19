@@ -61,10 +61,9 @@ public class FixMyActivity extends AppCompatActivity {
     EditText et_location, et_make, et_model, et_year, et_budget, et_description;
     MyPrefs prefs;
     ImageView img_location, img_item;
-    String address, lat_long;
+    String address, lat_long,lat,adlong;
     Button btn_submit;
     String fileuri;
-    static int PICK_FROM_GALLERY = 1;
     Context context;
 
     @Override
@@ -96,7 +95,7 @@ public class FixMyActivity extends AppCompatActivity {
                 year = et_year.getText().toString();
                 budget = et_budget.getText().toString();
                 description = et_description.getText().toString();
-                //multipartImageUpload();
+                multipartImageUpload();
                 if (!(location.isEmpty() && make.isEmpty() && model.isEmpty() && year.isEmpty() && budget.isEmpty() && description.isEmpty())) {
                     multipartImageUpload();
                     OkHttpClient client = new OkHttpClient();
@@ -108,8 +107,8 @@ public class FixMyActivity extends AppCompatActivity {
                         jsonObject.put("model", model);
                         jsonObject.put("year", year);
                         jsonObject.put("budget", budget);
-                        jsonObject.put("latitude", "75.25");
-                        jsonObject.put("longitude", "54.62");
+                        jsonObject.put("latitude", lat);
+                        jsonObject.put("longitude", adlong);
                         jsonObject.put("description", description);
                         jsonObject.put("customerid", prefs.get_Val("id"));//"60cc25b2f40fbb2e8c215ccb"
                         jsonObject.put("dent_type", "indoor");
@@ -195,6 +194,8 @@ public class FixMyActivity extends AppCompatActivity {
                 ArrayList<ModelAddress> lst_address = gson._get_address(val);
                 address = lst_address.get(0).getAddress();
                 lat_long = lst_address.get(0).getLat_long();
+                lat = lst_address.get(0).getLat();
+                adlong = lst_address.get(0).getlong();
                 et_location.setText(address);
 
             }

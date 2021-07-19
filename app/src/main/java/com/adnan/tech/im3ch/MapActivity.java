@@ -68,6 +68,7 @@ public class MapActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 Toast.makeText(MapActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
+                getAddress();
                 onBackPressed();
             }
         });
@@ -205,7 +206,7 @@ public class MapActivity extends AppCompatActivity implements
     public void onBackPressed() {
         ArrayList<ModelAddress> lst_address = new ArrayList<>();
         lst_address.add(new ModelAddress("" + tv_address.getText().toString().trim(),
-                "" + latLng.latitude + ":" + latLng.longitude));
+                "" + latLng.latitude ,""+ latLng.longitude));
         GSON_Module gson = new GSON_Module();
         String val = gson._put_address(lst_address);
         Intent intent = new Intent();
@@ -215,9 +216,4 @@ public class MapActivity extends AppCompatActivity implements
         finish();
     }
 
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        new Anim().Back(this);
-    }*/
 }

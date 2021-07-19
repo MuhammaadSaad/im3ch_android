@@ -1,11 +1,12 @@
 package com.adnan.tech.im3ch.Model;
 
 public class ModelAddress {
-    String address,lat_long;
+    String address,lat,longitude;
 
-    public ModelAddress(String address, String lat_long) {
+    public ModelAddress(String address, String lat,String longitude) {
         this.address = address;
-        this.lat_long = lat_long;
+        this.lat = lat;
+        this.longitude = longitude;
     }
 
     public String getAddress() {
@@ -17,10 +18,17 @@ public class ModelAddress {
     }
 
     public String getLat_long() {
-        return lat_long;
+        return lat+longitude;
+    }
+    public String getLat() {
+        return lat;
+    }
+    public String getlong() {
+        return longitude;
     }
 
-    public void setLat_long(String lat_long) {
-        this.lat_long = lat_long;
+    public void setLat_long(String lat,String longitude) {
+        this.lat = lat;
+        this.longitude = longitude;
     }
 }

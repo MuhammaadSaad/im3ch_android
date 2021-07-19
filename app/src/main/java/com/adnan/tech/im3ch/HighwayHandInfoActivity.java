@@ -11,8 +11,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,8 +23,11 @@ import androidx.core.app.ActivityCompat;
 
 import com.adnan.tech.im3ch.Model.ModelAddress;
 import com.adnan.tech.im3ch.Util.Anim;
+import com.adnan.tech.im3ch.Util.Api;
+import com.adnan.tech.im3ch.Util.BackgroundToast;
 import com.adnan.tech.im3ch.Util.DialogClass;
 import com.adnan.tech.im3ch.Util.GSON_Module;
+import com.adnan.tech.im3ch.Util.MyPrefs;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,21 +39,38 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class HighwayHandInfoActivity extends AppCompatActivity implements
         GoogleMap.OnMapClickListener {
+    Context context;
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     private GoogleMap mMap;
     LatLng latLng;
     TextView tv_address, tv_service;
+    EditText et_dis;
     Button btn_ok;
-    //MyPrefs prefs;
+    MyPrefs prefs;
     Geocoder geocoder;
-    String address, lat_long;
+    String  lat_long;
 
 
     @Override
@@ -57,15 +79,81 @@ public class HighwayHandInfoActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_highway_hand_info);
         tv_address = findViewById(R.id.tv_address);
         tv_service = findViewById(R.id.tv_service);
+        et_dis = findViewById(R.id.et_dis);
         tv_service.setText(getIntent().getStringExtra("type"));
         btn_ok = findViewById(R.id.btn_done);
-        // prefs = new MyPrefs(this);
-
+        prefs = new MyPrefs(this);
+        context=this;
         //address = getIntent().getStringExtra("address");
         lat_long = getIntent().getStringExtra("lat_long");
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getAddress();
+                String Service=tv_service.getText().toString();
+                String address=tv_address.getText().toString();
+                String description=et_dis.getText().toString();
+                OkHttpClient client = new OkHttpClient();
+                MediaType mediaType = MediaType.parse("application/json");
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+                    jsonObject.put("service_type", Service);
+                    jsonObject.put("lat", latLng.latitude);
+                    jsonObject.put("longitude", latLng.longitude);
+                    jsonObject.put("address", address);
+                    jsonObject.put("description", description);
+                    jsonObject.put("customerid", prefs.get_Val("id"));//"60cc25b2f40fbb2e8c215ccb"
+                    jsonObject.put("Time", timeStamp);
+                    Log.e("test", jsonObject.toString());
+                    // jsonObject.put("image", "suzuki");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
+                Request request = new Request.Builder()
+                        .url(new Api().URL + "Customer_Urgent")
+                        .method("POST", body)
+                        .addHeader("Content-Type", "application/json")
+                        .build();
+                client.newCall(request).enqueue(
+                        new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                new BackgroundToast().showDialog(context,
+                                        "Error",
+                                        e.getMessage());
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+
+                                //loading.dismiss();
+                                try {
+                                    //loading.dismiss();
+                                    ResponseBody rebody = response.body();
+                                    String responseb = rebody.string();
+
+                                    Log.e("test", responseb);
+                                    JSONObject json = new JSONObject(responseb);
+                                    String message = json.getString("message");
+                                    if (message.equalsIgnoreCase("your request is submitted soon machanic will response you")) {
+                                        new BackgroundToast().showDialog(context,
+                                                "Message",
+                                                message);
+                                    } else {
+                                        new BackgroundToast().showDialog(context,
+                                                "Message",
+                                                message);
+                                    }
+                                } catch (Exception ex) {
+                                    new BackgroundToast().showDialog(context,
+                                            "Error",
+                                            ex.getMessage());
+                                }
+                            }
+                        });
                 //Toast.makeText(HighwayHandInfoActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
 
             }
@@ -156,6 +244,7 @@ public class HighwayHandInfoActivity extends AppCompatActivity implements
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 44) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation();
@@ -196,7 +285,7 @@ public class HighwayHandInfoActivity extends AppCompatActivity implements
     public void onBackPressed() {
         ArrayList<ModelAddress> lst_address = new ArrayList<>();
         lst_address.add(new ModelAddress("" + tv_address.getText().toString().trim(),
-                "" + latLng.latitude + ":" + latLng.longitude));
+                "" + latLng.latitude , "" + latLng.longitude));
         GSON_Module gson = new GSON_Module();
         String val = gson._put_address(lst_address);
         Intent intent = new Intent();
