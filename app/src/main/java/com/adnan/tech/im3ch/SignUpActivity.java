@@ -100,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
                             et_pwd.getText().toString().equals("") &&
                             et_email.getText().toString().equals("") &&
                             et_number.getText().toString().equals(""))) {
-                        if (et_pwd.getText().toString().length() > 8) {
+                        if (et_pwd.getText().toString().length() > 7) {
                             if (isValidEmail(et_email.getText().toString())) {
                                 loading.show();
                                 OkHttpClient client = new OkHttpClient();

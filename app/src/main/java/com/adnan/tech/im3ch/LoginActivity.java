@@ -103,8 +103,8 @@ public class LoginActivity extends AppCompatActivity {
                     MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
 
                     ArrayList<ModelParams> params = new ArrayList<>();
-                    params.add(new ModelParams("name", "adnan".toLowerCase()));
-                    params.add(new ModelParams("password", et_pwd.getText().toString().toLowerCase()));
+                    //params.add(new ModelParams("name", "adnan".toLowerCase()));
+                    params.add(new ModelParams("password", et_pwd.getText().toString()));
                     params.add(new ModelParams("email", et_email.getText().toString().toLowerCase()));
                     String parameters = ParamGetter.getValue(params);
 
