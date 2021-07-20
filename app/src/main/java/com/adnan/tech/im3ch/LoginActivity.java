@@ -22,18 +22,20 @@ import com.adnan.tech.im3ch.Util.DialogClass;
 import com.adnan.tech.im3ch.Util.Dialog_Loading;
 import com.adnan.tech.im3ch.Util.MyPrefs;
 import com.adnan.tech.im3ch.Util.ParamGetter;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -118,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     client.newCall(request).enqueue(
                             new Callback() {
                                 @Override
-                                public void onFailure(Request request, IOException e) {
+                                public void onFailure(Call request, IOException e) {
                                     loading.dismiss();
                                     new BackgroundToast().showDialog(context,
                                             "Error",
@@ -127,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onResponse(Response response) {
+                                public void onResponse(Call call, Response response) {
                                     try {
                                         loading.dismiss();
                                         ResponseBody rebody = response.body();

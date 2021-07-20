@@ -5,17 +5,21 @@ public class Mechanic {
     String name;
     String mechenicId;
     String location;
+    String price;
+    String dent_type;
     String rating;
-    String image;
-    String Services;
+    String pics;
+    String description;
 
-    public Mechanic(String mechenicId,String name, String location, String rating, String image, String services) {
+    public Mechanic(String mechenicId,String price,String dent_type,String name, String location, String rating, String image, String services) {
         this.name = name;
+        this.price = price;
+        this.dent_type = dent_type;
         this.mechenicId = mechenicId;
         this.location = location;
         this.rating = rating;
-        this.image = image;
-        Services = services;
+        this.pics = image;
+        description = services;
     }
 
     public Mechanic()
@@ -56,17 +60,17 @@ public class Mechanic {
     }
 
     public String getImage() {
-        return image;
+        return pics;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.pics = image;
     }
     public String getServices() {
-        return Services;
+        return description;
     }
 
     public void setServices(String Services) {
-        this.Services = image;
+        this.description = Services;
     }
 }

@@ -2,7 +2,7 @@ package com.adnan.tech.im3ch;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,15 +12,6 @@ import com.adnan.tech.im3ch.Util.Anim;
 import com.adnan.tech.im3ch.Util.AppPermission;
 import com.adnan.tech.im3ch.Util.ConstVar;
 import com.adnan.tech.im3ch.Util.DialogClass;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_signUp_Mechanic, btn_signUp_Customer;

@@ -5,70 +5,69 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.adnan.tech.im3ch.MechanicViewHolder;
 import com.adnan.tech.im3ch.Model.Mechanic;
 import com.adnan.tech.im3ch.R;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
-public class MechanicViewAdapter extends BaseAdapter {
+import java.util.List;
+
+public class MechanicViewAdapter  extends RecyclerView.Adapter<MechanicViewHolder>  {
 
     Context context;
-    ArrayList<Mechanic> mechanics;
+    List<Mechanic> mechanics;
 
-    public MechanicViewAdapter(Context context, ArrayList<Mechanic> mechanics) {
+    public MechanicViewAdapter(Context context, List<Mechanic> mechanics) {
         this.context = context;
         this.mechanics = mechanics;
     }
 
 
+    @NonNull
+    @NotNull
     @Override
-    public int getCount() {
-        return mechanics.size();
+    public MechanicViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        //return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mechanic_view, parent, false);
+        MechanicViewHolder viewHolder = new MechanicViewHolder(view);//.ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public Object getItem(int i) {
+    public void onBindViewHolder(@NonNull @NotNull MechanicViewHolder viewHolder, int position) {
+
+
+        final Mechanic mechanic = (Mechanic) this.getItem(position);
+        viewHolder.tvName.setText("Mechanic Name : "+mechanic.getName());
+        viewHolder.tvLocation.setText("Location : "+mechanic.getLocation());
+        viewHolder.Description.setText("Description : "+mechanic.getServices());
+    }
+
+    Mechanic getItem(int i){
         return mechanics.get(i);
     }
-
     @Override
     public long getItemId(int i) {
         return i;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.mechanic_view, viewGroup, false);
-        }
-
-        final Mechanic mechanic = (Mechanic) this.getItem(i);
-
-        TextView tvName = view.findViewById(R.id.tvName);
-        TextView tvLocation = view.findViewById(R.id.tvLocation);
-
-
-        tvName.setText("Mechanic Name : "+mechanic.getName());
-        tvLocation.setText("Location : "+mechanic.getLocation());
-
-        return view;
+    public int getItemCount() {
+        return mechanics.size();
     }
 
 
+    public void updateModels(List<Mechanic> newModels) {
+        mechanics.clear();
+        mechanics.addAll(newModels);
+
+        notifyDataSetChanged();
+        //mechanics.notify();// notifyDataSetChaged();
+    }
 }
