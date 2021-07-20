@@ -60,7 +60,7 @@ public class IFixRideActivity extends AppCompatActivity {
                 budget = et_budget.getText().toString();
                 if(rd_indoor.isChecked() && !outdoor.isChecked()){
                     rdSel="In Door";
-                }else if(rd_indoor.isChecked() && !outdoor.isChecked()){
+                }else if(!rd_indoor.isChecked() && outdoor.isChecked()){
                     rdSel="Out Door";
                 }else{
                     Toast.makeText(context,"Please Select Dent Type You can repair",Toast.LENGTH_SHORT).show();
@@ -73,6 +73,8 @@ public class IFixRideActivity extends AppCompatActivity {
                     try {
                         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                         jsonObject.put("mechenicId",prefs.get_Val("id") );
+                        jsonObject.put("name", prefs.get_Val("name"));//"60cc25b2f40fbb2e8c215ccb"
+                        jsonObject.put("phone", prefs.get_Val("phone"));//"60cc25b2f40fbb2e8c215ccb"
                         jsonObject.put("description", discr);
                         jsonObject.put("price", budget);
                         jsonObject.put("dent_type", rdSel);

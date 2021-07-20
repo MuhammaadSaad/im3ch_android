@@ -27,30 +27,6 @@ public class FindMechanicActivity extends AppCompatActivity {
         mechanic.setLocation("Islamabad");
         mechanics.add(mechanic);
 
-        mechanic=new Mechanic();
-        mechanic.setName("Zahoor");
-        mechanic.setLocation("Rawalpindi");
-        mechanics.add(mechanic);
-
-        mechanic=new Mechanic();
-        mechanic.setName("Hassan");
-        mechanic.setLocation("Karachi");
-        mechanics.add(mechanic);
-
-        mechanic=new Mechanic();
-        mechanic.setName("Ahmed");
-        mechanic.setLocation("Lahore");
-        mechanics.add(mechanic);
-
-        mechanic=new Mechanic();
-        mechanic.setName("Abid");
-        mechanic.setLocation("Quetta");
-        mechanics.add(mechanic);
-
-        mechanic=new Mechanic();
-        mechanic.setName("Waqas");
-        mechanic.setLocation("Multan");
-        mechanics.add(mechanic);
 
         mechanicViewAdapter=new MechanicViewAdapter(FindMechanicActivity.this, mechanics);
         listView.setAdapter(mechanicViewAdapter);

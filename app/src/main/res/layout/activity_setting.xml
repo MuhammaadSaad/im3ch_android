@@ -42,7 +42,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hafiz Asjad"
+                android:text=""
+                android:id="@+id/tv_name"
                 android:textColor="@color/white" />
 
 
@@ -218,31 +219,7 @@
                 android:padding="10sp">
 
 
-                <LinearLayout
-                    android:id="@+id/lnr_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:foreground="?android:selectableItemBackground"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="3sp">
 
-                    <ImageView
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_marginRight="8sp"
-                        android:src="@drawable/ic_my_profile" />
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Name"
-                        android:textColor="@color/black" />
-
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/lnr_password"

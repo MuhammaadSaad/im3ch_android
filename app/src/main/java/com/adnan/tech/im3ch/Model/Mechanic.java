@@ -3,14 +3,33 @@ package com.adnan.tech.im3ch.Model;
 public class Mechanic {
 
     String name;
+    String mechenicId;
     String location;
     String rating;
     String image;
+    String Services;
+
+    public Mechanic(String mechenicId,String name, String location, String rating, String image, String services) {
+        this.name = name;
+        this.mechenicId = mechenicId;
+        this.location = location;
+        this.rating = rating;
+        this.image = image;
+        Services = services;
+    }
 
     public Mechanic()
     {
 
 
+    }
+
+    public String getMechenicId() {
+        return mechenicId;
+    }
+
+    public void setMechenicId(String mechenicId) {
+        this.mechenicId = mechenicId;
     }
     public String getName() {
         return name;
@@ -42,5 +61,12 @@ public class Mechanic {
 
     public void setImage(String image) {
         this.image = image;
+    }
+    public String getServices() {
+        return Services;
+    }
+
+    public void setServices(String Services) {
+        this.Services = image;
     }
 }

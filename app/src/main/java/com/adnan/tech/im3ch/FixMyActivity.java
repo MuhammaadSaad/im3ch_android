@@ -95,7 +95,7 @@ public class FixMyActivity extends AppCompatActivity {
                 year = et_year.getText().toString();
                 budget = et_budget.getText().toString();
                 description = et_description.getText().toString();
-                multipartImageUpload();
+                //multipartImageUpload();
                 if (!(location.isEmpty() && make.isEmpty() && model.isEmpty() && year.isEmpty() && budget.isEmpty() && description.isEmpty())) {
                     multipartImageUpload();
                     OkHttpClient client = new OkHttpClient();
@@ -111,6 +111,8 @@ public class FixMyActivity extends AppCompatActivity {
                         jsonObject.put("longitude", adlong);
                         jsonObject.put("description", description);
                         jsonObject.put("customerid", prefs.get_Val("id"));//"60cc25b2f40fbb2e8c215ccb"
+                        jsonObject.put("name", prefs.get_Val("name"));//"60cc25b2f40fbb2e8c215ccb"
+                        jsonObject.put("phone", prefs.get_Val("phone"));//"60cc25b2f40fbb2e8c215ccb"
                         jsonObject.put("dent_type", "indoor");
                         jsonObject.put("Time", timeStamp);
                         jsonObject.put("pics", "");
@@ -211,7 +213,8 @@ public class FixMyActivity extends AppCompatActivity {
                         String picturePath = convertMediaUriToPath(uri);
                         mBitmap = (BitmapFactory.decodeFile(picturePath));
                         fileuri = picturePath;
-                        img_item.setImageBitmap(mBitmap);
+                        img_item.setImageURI(uri);
+                        //img_item.setImageBitmap(mBitmap);
                     }catch (Exception ex){
                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -222,7 +225,7 @@ public class FixMyActivity extends AppCompatActivity {
         String[] filePath = { MediaStore.Images.Media.DATA };
         String[] bits = selectedImage.toString().split("/");
         String filename = new Date().getTime() + bits[bits.length - 1];
-        String picturePath=selectedImage.getPath();
+        String picturePath=selectedImage.toString();
         if (filename.contains("%3A")) {
             String id = filename.split("%3A")[1];
             // val type=filename.split("%3a", ignoreCase = true).get(0)
@@ -256,45 +259,46 @@ public class FixMyActivity extends AppCompatActivity {
     Bitmap mBitmap;
     private void multipartImageUpload() {
         try {
-            File filesDir = getApplicationContext().getFilesDir();
-            File file = new File(filesDir, "image" + ".png");
+            if(mBitmap!=null) {
+                File filesDir = getApplicationContext().getFilesDir();
+                File file = new File(filesDir, "image" + ".png");
 
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+                byte[] bitmapdata = bos.toByteArray();
 
 
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
-            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
 
-            retrofit2.Call<ResponseBody> req = apiService.postImage(body, name);
-            req.enqueue(new retrofit2.Callback<ResponseBody>() {
-                @Override
-                public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                    if (response.code() == 200) {
-                        Toast.makeText(getApplicationContext(), "Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+
+                RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
+                RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
+
+                retrofit2.Call<ResponseBody> req = apiService.postImage(body, name);
+                req.enqueue(new retrofit2.Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        if (response.code() == 200) {
+                            Toast.makeText(getApplicationContext(), "Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
                     }
 
-                    Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
-                    t.printStackTrace();
-                }
+                    @Override
+                    public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
 
 
-            });
+                });
 
-
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

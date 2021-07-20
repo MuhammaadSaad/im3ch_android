@@ -104,6 +104,8 @@ public class HighwayHandInfoActivity extends AppCompatActivity implements
                     jsonObject.put("address", address);
                     jsonObject.put("description", description);
                     jsonObject.put("customerid", prefs.get_Val("id"));//"60cc25b2f40fbb2e8c215ccb"
+                    jsonObject.put("name", prefs.get_Val("name"));//"60cc25b2f40fbb2e8c215ccb"
+                    jsonObject.put("phone", prefs.get_Val("phone"));//"60cc25b2f40fbb2e8c215ccb"
                     jsonObject.put("Time", timeStamp);
                     Log.e("test", jsonObject.toString());
                     // jsonObject.put("image", "suzuki");

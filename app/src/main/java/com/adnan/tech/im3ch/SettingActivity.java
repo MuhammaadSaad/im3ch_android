@@ -51,7 +51,6 @@ public class SettingActivity extends AppCompatActivity {
             tv_phone = findViewById(R.id.tv_phone);
             tv_sign_out = findViewById(R.id.tv_sign_out);
 
-            lnr_name = findViewById(R.id.lnr_name);
             lnr_password = findViewById(R.id.lnr_password);
             lnr_email = findViewById(R.id.lnr_email);
             lnr_phone = findViewById(R.id.lnr_phone);
@@ -62,6 +61,7 @@ public class SettingActivity extends AppCompatActivity {
 
             tv_name.setText(prefs.get_Val("name"));
             tv_password.setText(prefs.get_Val("password"));
+            tv_phone.setText(prefs.get_Val("phone"));
             tv_email.setText(prefs.get_Val("email"));
 
         } catch (Exception ex) {
