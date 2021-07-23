@@ -1,5 +1,6 @@
 package com.adnan.tech.im3ch;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.adnan.tech.im3ch.Model.ModelAddress;
@@ -37,6 +41,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -45,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -63,7 +70,8 @@ public class FixMyActivity extends AppCompatActivity {
     ImageView img_location, img_item;
     String address, lat_long,lat,adlong;
     Button btn_submit;
-    String fileuri;
+    Uri fileuri;
+    String uploadpath="";
     Context context;
 
     @Override
@@ -115,7 +123,7 @@ public class FixMyActivity extends AppCompatActivity {
                         jsonObject.put("phone", prefs.get_Val("phone"));//"60cc25b2f40fbb2e8c215ccb"
                         jsonObject.put("dent_type", "indoor");
                         jsonObject.put("Time", timeStamp);
-                        jsonObject.put("pics", "");
+                        jsonObject.put("pics", uploadpath);
                         Log.e("test", jsonObject.toString());
                         // jsonObject.put("image", "suzuki");
                     } catch (JSONException e) {
@@ -210,9 +218,10 @@ public class FixMyActivity extends AppCompatActivity {
                 public void onActivityResult(Uri uri) {
                     try {
                         // Handle the returned Uri
+                        //File f=new File(uri.getPath());
+
                         String picturePath = convertMediaUriToPath(uri);
-                        mBitmap = (BitmapFactory.decodeFile(picturePath));
-                        fileuri = picturePath;
+                        fileuri = uri;
                         img_item.setImageURI(uri);
                         //img_item.setImageBitmap(mBitmap);
                     }catch (Exception ex){
@@ -255,159 +264,89 @@ public class FixMyActivity extends AppCompatActivity {
         super.onBackPressed();
         new Anim().Back(this);
     }
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, String fileUri) {
+
+        File file = new File(fileUri);
+
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"),
+                                file
+                        );
+
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+    void writeFile(InputStream in, File file) {
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while((len=in.read(buf))>0){
+                out.write(buf,0,len);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if ( out != null ) {
+                    out.close();
+                }
+                in.close();
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        }
+    }
     ApiService apiService;
-    Bitmap mBitmap;
     private void multipartImageUpload() {
         try {
-            if(mBitmap!=null) {
-                File filesDir = getApplicationContext().getFilesDir();
-                File file = new File(filesDir, "image" + ".png");
+            String id = DocumentsContract.getDocumentId(fileuri);
+            InputStream inputStream = getContentResolver().openInputStream(fileuri);
 
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                mBitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
-                byte[] bitmapdata = bos.toByteArray();
+            File uploadFile = new File(getCacheDir().getAbsolutePath()+"/"+id);
+            writeFile(inputStream, uploadFile);
+            String filePath = uploadFile.getAbsolutePath();
+            MultipartBody.Part ps= prepareFilePart("upload", uploadFile.getPath());
+            RequestBody name = RequestBody.create(MediaType.parse("image/*"), "upload");
 
+            retrofit2.Call<ResponseBody> req = apiService.postImage(ps, name);
+            req.enqueue(new retrofit2.Callback<ResponseBody>() {
+                @Override
+                public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    try {
+                        ResponseBody rebody = response.body();
+                        String responseb = rebody.string();
 
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(bitmapdata);
-                fos.flush();
-                fos.close();
-
-
-                RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-                MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
-                RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
-
-                retrofit2.Call<ResponseBody> req = apiService.postImage(body, name);
-                req.enqueue(new retrofit2.Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                        Log.e("test", responseb);
+                        JSONObject json = new JSONObject(responseb);
+                        System.out.println(json.toString());
+                        String message = json.getString("message");
+                        uploadpath=message;
                         if (response.code() == 200) {
                             Toast.makeText(getApplicationContext(), "Uploaded Successfully!", Toast.LENGTH_SHORT).show();
                         }
+                    }catch (Exception ex){
 
-                        Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
                     }
+                    Toast.makeText(getApplicationContext(), response.code() + " ", Toast.LENGTH_SHORT).show();
+                }
 
-                    @Override
-                    public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
-                        t.printStackTrace();
-                    }
+                @Override
+                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Request failed", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+                }
 
 
-                });
+            });
 
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+
+        }  catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public int uploadFile(String sourceFileUri) {
 
-        int serverResponseCode=0;
-        String[] bits = sourceFileUri.split("/");
-        String fileName = new Date().getTime() + bits[bits.length - 1];
-
-
-        HttpURLConnection conn = null;
-        DataOutputStream dos = null;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-        File sourceFile = new File(sourceFileUri);
-
-        if (!sourceFile.isFile()) {
-
-            //dialog.dismiss();
-
-            Log.e("uploadFile", "Source File not exist :"
-                    + sourceFileUri + "" + fileName);
-
-
-            return 0;
-
-        } else {
-            try {
-
-                // open a URL connection to the Servlet
-                FileInputStream fileInputStream = new FileInputStream(sourceFile);
-                URL url = new URL(new Api().URL + "upload");
-
-                // Open a HTTP  connection to  the URL
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true); // Allow Inputs
-                conn.setDoOutput(true); // Allow Outputs
-                conn.setUseCaches(false); // Don't use a Cached Copy
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Connection", "Keep-Alive");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("file", fileName);
-
-                dos = new DataOutputStream(conn.getOutputStream());
-
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=" + fileName + ";filename=" + fileName);
-
-                dos.writeBytes(lineEnd);
-
-                // create a buffer of  maximum size
-                bytesAvailable = fileInputStream.available();
-
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                buffer = new byte[bufferSize];
-
-                // read file and write it into form...
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                while (bytesRead > 0) {
-
-                    dos.write(buffer, 0, bufferSize);
-                    bytesAvailable = fileInputStream.available();
-                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                }
-
-                // send multipart form data necesssary after file data...
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                // Responses from the server (code and message)
-                 serverResponseCode = conn.getResponseCode();
-                String serverResponseMessage = conn.getResponseMessage();
-
-                Log.i("uploadFile", "HTTP Response is : "
-                        + serverResponseMessage + ": " + serverResponseCode);
-
-                if (serverResponseCode == 200) {
-                    Toast.makeText(FixMyActivity.this, "File Upload Complete.",
-                            Toast.LENGTH_SHORT).show();
-                }
-
-                //close the streams //
-                fileInputStream.close();
-                dos.flush();
-                dos.close();
-
-            } catch (MalformedURLException ex) {
-                //dialog.dismiss();
-                ex.printStackTrace();
-                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("Upload file to server", "Exception : "
-                        + e.getMessage(), e);
-            }
-
-            return serverResponseCode;
-
-        } // End else block
-    }
 }

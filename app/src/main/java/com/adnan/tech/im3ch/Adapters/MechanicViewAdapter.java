@@ -2,6 +2,7 @@ package com.adnan.tech.im3ch.Adapters;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class MechanicViewAdapter  extends RecyclerView.Adapter<MechanicViewHolde
 
     @Override
     public int getItemCount() {
+        Log.e("test",mechanics.size()+"");
         return mechanics.size();
     }
 

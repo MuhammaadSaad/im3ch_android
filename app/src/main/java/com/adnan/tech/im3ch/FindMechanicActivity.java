@@ -1,6 +1,7 @@
 package com.adnan.tech.im3ch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -43,8 +44,11 @@ public class FindMechanicActivity extends AppCompatActivity {
         context=this;
 
         listView=findViewById(R.id.listView);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        listView.setLayoutManager(llm);
+        //listView.setAdapter( adapter );
         FetchMechs();
-
         mechanicViewAdapter=new MechanicViewAdapter(context, mechanics);
         listView.setAdapter(mechanicViewAdapter);
     }
@@ -76,6 +80,7 @@ public class FindMechanicActivity extends AppCompatActivity {
                                           mechanics.addAll(Arrays.asList(gson.fromJson(responseb, Mechanic[].class)));
                                           mechanicViewAdapter=new MechanicViewAdapter(context, mechanics);
                                           listView.setAdapter(mechanicViewAdapter);
+                                          mechanicViewAdapter.notifyDataSetChanged();
                                       }
                                   }
                     );
