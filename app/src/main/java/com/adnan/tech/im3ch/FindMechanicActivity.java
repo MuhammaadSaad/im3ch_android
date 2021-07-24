@@ -68,7 +68,7 @@ public class FindMechanicActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(new Api().URL+"Customer_Urgent")
+                .url(new Api().URL+"/Customer_Urgent")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -109,7 +109,7 @@ public class FindMechanicActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(new Api().URL+"car")
+                .url(new Api().URL+"/car")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -150,7 +150,7 @@ public class FindMechanicActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(new Api().URL+"MechReq")
+                .url(new Api().URL+"/MechReq")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

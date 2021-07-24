@@ -17,6 +17,9 @@ import com.adnan.tech.im3ch.MechanicViewHolder;
 import com.adnan.tech.im3ch.Model.Customer;
 import com.adnan.tech.im3ch.Model.Mechanic;
 import com.adnan.tech.im3ch.R;
+import com.adnan.tech.im3ch.Util.Api;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,6 +58,18 @@ public class CustomerViewAdapter extends RecyclerView.Adapter<CustomerViewHolder
             viewHolder.price.setText("Urgent");
         else
             viewHolder.price.setText("Budget : " + customer.getBudget());
+        if(customer.getPics()==null ||customer.getPics().isEmpty()){
+            viewHolder.images.setVisibility(View.GONE);
+        }else{
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round);
+            Log.e("picurl",new Api().URL+customer.getPics());
+            Glide.with(context).load(new Api().URL+customer.getPics()).apply(options).into(viewHolder.images);
+            viewHolder.images.setVisibility(View.VISIBLE);
+        }
         if(customer.getDent_type()==null)
             viewHolder.Description.setText("Description : " + customer.getDescription());
         else

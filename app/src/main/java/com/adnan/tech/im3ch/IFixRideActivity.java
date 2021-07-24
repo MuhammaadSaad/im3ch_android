@@ -87,7 +87,7 @@ public class IFixRideActivity extends AppCompatActivity {
                     }
                     RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
                     Request request = new Request.Builder()
-                            .url(new Api().URL + "customer_request")
+                            .url(new Api().URL + "/customer_request")
                             .method("POST", body)
                             .addHeader("Content-Type", "application/json")
                             .build();

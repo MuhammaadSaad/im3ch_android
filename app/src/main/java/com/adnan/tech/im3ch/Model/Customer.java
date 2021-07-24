@@ -17,6 +17,16 @@ public class Customer {
 
     private String name;
 
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
+
+    private String pics;
+
     private String phone;
 
     private String Time;

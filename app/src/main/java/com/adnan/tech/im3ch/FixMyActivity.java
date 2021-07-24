@@ -91,7 +91,7 @@ public class FixMyActivity extends AppCompatActivity {
         btn_submit = findViewById(R.id.btn_Next);
         img_item = findViewById(R.id.img_item);
         OkHttpClient client = new OkHttpClient();
-        apiService = new Retrofit.Builder().baseUrl(new Api().URL + "upload/").client(client).build().create(ApiService.class);
+        apiService = new Retrofit.Builder().baseUrl(new Api().URL + "/upload").client(client).build().create(ApiService.class);
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +106,9 @@ public class FixMyActivity extends AppCompatActivity {
                 //multipartImageUpload();
                 if (!(location.isEmpty() && make.isEmpty() && model.isEmpty() && year.isEmpty() && budget.isEmpty() && description.isEmpty())) {
                     multipartImageUpload();
+                    while (uploadpath.equals("")){
+
+                    }
                     OkHttpClient client = new OkHttpClient();
                     MediaType mediaType = MediaType.parse("application/json");
                     JSONObject jsonObject = new JSONObject();
@@ -131,7 +134,7 @@ public class FixMyActivity extends AppCompatActivity {
                     }
                     RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
                     Request request = new Request.Builder()
-                            .url(new Api().URL + "car")
+                            .url(new Api().URL + "/car")
                             .method("POST", body)
                             .addHeader("Content-Type", "application/json")
                             .build();

@@ -114,7 +114,7 @@ public class HighwayHandInfoActivity extends AppCompatActivity implements
                 }
                 RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
                 Request request = new Request.Builder()
-                        .url(new Api().URL + "Customer_Urgent")
+                        .url(new Api().URL + "/Customer_Urgent")
                         .method("POST", body)
                         .addHeader("Content-Type", "application/json")
                         .build();

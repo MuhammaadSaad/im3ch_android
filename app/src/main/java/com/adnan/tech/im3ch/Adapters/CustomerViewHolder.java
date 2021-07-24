@@ -20,7 +20,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder {
     public TextView price ;
     public TextView Description ;
     public Button contact,chat ;
-    public ImageView loc,serviceType ;
+    public ImageView loc,serviceType,images ;
 
     public CustomerViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -32,5 +32,6 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder {
         chat = itemView.findViewById(R.id.chat);
         loc = itemView.findViewById(R.id.img_location);
         serviceType = itemView.findViewById(R.id.serviceType);
+        images = itemView.findViewById(R.id.images);
     }
 }
