@@ -108,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements
                         public void onMapReady(GoogleMap googleMap) {
                             mMap = googleMap;
                             if (lat_long != null) {
-                                String[] ltlng = prefs.get_Val(ConstVar.pref_LatLng).split(":");
+                                String[] ltlng =lat_long.split(":");
                                 latLng = new LatLng(Double.parseDouble(ltlng[0]), Double.parseDouble(ltlng[1]));
                             } else {
                                 if (location != null) {

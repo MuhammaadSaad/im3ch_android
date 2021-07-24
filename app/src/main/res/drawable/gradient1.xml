@@ -4,8 +4,8 @@
         <shape android:shape="rectangle">
             <gradient
                 android:angle="360"
-                android:endColor="@color/gradientOrange"
-                android:startColor="@color/gradientLightYellow" />
+                android:endColor="@color/text_head"
+                android:startColor="@color/btn_un_click" />
             <corners android:radius="20dp" />
 
         </shape>

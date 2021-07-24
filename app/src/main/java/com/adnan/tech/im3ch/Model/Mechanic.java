@@ -5,6 +5,49 @@ public class Mechanic {
     String name;
     String mechenicId;
     String location;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    String phone;
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getDent_type() {
+        return dent_type;
+    }
+
+    public void setDent_type(String dent_type) {
+        this.dent_type = dent_type;
+    }
+
+    public String getPics() {
+        return pics;
+    }
+
+    public void setPics(String pics) {
+        this.pics = pics;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     String price;
     String dent_type;
     String rating;

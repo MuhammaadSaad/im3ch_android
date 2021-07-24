@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/splash_bg" />
+            android:background="@drawable/gradient1" />
 
         <View
             android:id="@+id/overlay_image"
@@ -193,7 +193,8 @@
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/light_grey"
                     android:textCursorDrawable="@drawable/color_cursor_white"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="+92" />
 
             </LinearLayout>
 

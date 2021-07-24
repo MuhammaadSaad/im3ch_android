@@ -23,4 +23,5 @@
     <color name="gradientOrange">#FF416C</color>
     <color name="gradientViolet">#8A52E9</color>
     <color name="gradientLightYellow">#FFA72F</color>
+    <color name="yellow">#FFEB3B</color>
 </resources>

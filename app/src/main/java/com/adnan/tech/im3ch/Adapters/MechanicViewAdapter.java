@@ -2,6 +2,8 @@ package com.adnan.tech.im3ch.Adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +47,31 @@ public class MechanicViewAdapter  extends RecyclerView.Adapter<MechanicViewHolde
 
 
         final Mechanic mechanic = (Mechanic) this.getItem(position);
-        viewHolder.tvName.setText("Mechanic Name : "+mechanic.getName());
-        viewHolder.tvLocation.setText("Location : "+mechanic.getLocation());
-        viewHolder.Description.setText("Description : "+mechanic.getServices());
+
+            viewHolder.tvName.setText("Mechanic Name : " + mechanic.getName());
+            viewHolder.price.setText("Price : Rs. " + mechanic.getPrice());
+            viewHolder.Description.setText("Description : " + mechanic.getServices());
+
+        viewHolder.chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String url = "https://api.whatsapp.com/send?phone="+mechanic.getPhone();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                context.startActivity(i);
+            }
+        });
+
+        viewHolder.contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //http://wa.me/
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+mechanic.getPhone()));//change the number
+                context.startActivity(callIntent);
+            }
+        });
     }
 
     Mechanic getItem(int i){
