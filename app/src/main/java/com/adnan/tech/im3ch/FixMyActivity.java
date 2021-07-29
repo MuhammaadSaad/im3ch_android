@@ -90,8 +90,6 @@ public class FixMyActivity extends AppCompatActivity {
         img_location = findViewById(R.id.img_location);
         btn_submit = findViewById(R.id.btn_Next);
         img_item = findViewById(R.id.img_item);
-        OkHttpClient client = new OkHttpClient();
-        apiService = new Retrofit.Builder().baseUrl(new Api().URL + "/upload").client(client).build().create(ApiService.class);
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,6 +304,8 @@ public class FixMyActivity extends AppCompatActivity {
     ApiService apiService;
     private void multipartImageUpload() {
         try {
+            OkHttpClient client = new OkHttpClient();
+            apiService = new Retrofit.Builder().baseUrl(new Api().URL + "/upload").client(client).build().create(ApiService.class);
             String id = DocumentsContract.getDocumentId(fileuri);
             InputStream inputStream = getContentResolver().openInputStream(fileuri);
 
