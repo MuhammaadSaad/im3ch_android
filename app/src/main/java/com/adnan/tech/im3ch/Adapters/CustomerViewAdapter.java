@@ -52,12 +52,12 @@ public class CustomerViewAdapter extends RecyclerView.Adapter<CustomerViewHolder
 
         final Customer customer = (Customer) this.getItem(position);
 
-        viewHolder.tvName.setText("Customer Name : " + customer.getName());
+        viewHolder.tvName.setText(customer.getName());
         viewHolder.time.setText( customer.getTime());
         if(customer.getBudget()==0)
             viewHolder.price.setText("Urgent");
         else
-            viewHolder.price.setText("Budget : " + customer.getBudget());
+            viewHolder.price.setText("Budget : Rs." + customer.getBudget());
         if(customer.getPics()==null ||customer.getPics().isEmpty()){
             viewHolder.images.setVisibility(View.GONE);
         }else{

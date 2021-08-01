@@ -305,7 +305,7 @@ public class FixMyActivity extends AppCompatActivity {
     private void multipartImageUpload() {
         try {
             OkHttpClient client = new OkHttpClient();
-            apiService = new Retrofit.Builder().baseUrl(new Api().URL + "/upload").client(client).build().create(ApiService.class);
+            apiService = new Retrofit.Builder().baseUrl(new Api().URL ).client(client).build().create(ApiService.class);
             String id = DocumentsContract.getDocumentId(fileuri);
             InputStream inputStream = getContentResolver().openInputStream(fileuri);
 

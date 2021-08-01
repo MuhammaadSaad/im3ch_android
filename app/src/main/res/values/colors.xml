@@ -10,14 +10,16 @@
     <color name="grey">#787373</color>
     <color name="light_grey">#DCD9D9</color>
     <color name="bg">#FAF9F9</color>
-    <color name="light_red">#F48282</color>
+    <color name="light_red">#A30505</color>
     <color name="text_head">#CDE9FF</color>
     <color name="text_bottom">#E2F1FF</color>
+    <color name="ligthGr">#23D8F1B5</color>
+    <color name="tra">#00000000</color>
     <color name="green">#2BAA16</color>
     <color name="dialog_bg">#EDEDED</color>
     <color name="shimmer_color">#D6D6D6</color>
     <color name="sample">#d498af</color>
-    <color name="btn_click">#0585B8</color>
+    <color name="btn_click">#9C27B0</color>
     <color name="btn_un_click">#079EDA</color>
 
     <color name="gradientOrange">#FF416C</color>

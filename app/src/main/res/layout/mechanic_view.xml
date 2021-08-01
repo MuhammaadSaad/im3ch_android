@@ -17,7 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient1"
+            android:background="@color/btn_click"
             android:minHeight="100dp"
             android:padding="10dp">
 
@@ -27,20 +27,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:gravity="right"
+
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:id="@+id/profile"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:visibility="visible"
+                        android:layout_gravity="center"
+                        android:src="@drawable/user" />
                     <TextView
                         android:id="@+id/price"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="Rs. 75"
-                        android:textAlignment="textEnd"
+                        android:gravity="end"
                         android:textStyle="bold"
                         android:textColor="@color/light_red"
                         android:textSize="18dp" />
@@ -91,24 +99,30 @@
                     android:gravity="center"
                     android:orientation="horizontal">
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
+                    android:background="@drawable/on_click_btn"
+                    android:foreground="?android:selectableItemBackground"
                     android:id="@+id/chat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:background="@color/gradientLightYellow"
                     android:layout_marginRight="15dp"
                     android:text="Chat"/>
                     <Button
+
+                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@drawable/on_click_btn"
+                        android:foreground="?android:selectableItemBackground"
                         android:id="@+id/contact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:background="@color/gradientLightYellow"
                         android:text="Contact"/>
                 </LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>
+
 
     </androidx.cardview.widget.CardView>
 </LinearLayout>

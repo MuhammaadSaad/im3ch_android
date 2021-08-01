@@ -17,18 +17,59 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient1"
+            android:background="@color/tra"
             android:minHeight="100dp"
             android:padding="10dp">
 
-
+<LinearLayout
+    android:id="@+id/pflay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="4">
             <ImageView
-                android:id="@+id/images"
-                android:layout_width="90dp"
+                android:id="@+id/profile"
+                android:layout_width="0dp"
                 android:layout_height="90dp"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:src="@drawable/user" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_alignRight="@id/profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_weight="2"
+                android:textStyle="bold"
+                android:text="Customer Name : "
+                android:textColor="@android:color/black"
+                android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_weight="1"
+        android:text="Rs. 75"
+        android:layout_alignEnd="@id/tvName"
+        android:textStyle="bold"
+        android:textColor="@color/btn_click"
+        android:textSize="18dp" />
+
+</LinearLayout>
+            <ImageView
+                android:layout_below="@+id/pflay"
+                android:id="@+id/images"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:src="@drawable/logo" />
+
+
             <TextView
                 android:layout_below="@id/images"
                 android:id="@+id/time"
@@ -36,85 +77,68 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Time"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="18dp" />
-
-            <TextView
-                        android:id="@+id/price"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Rs. 75"
-                        android:layout_alignEnd="@id/tvName"
-                        android:textStyle="bold"
-                        android:textColor="@color/light_red"
-                        android:textSize="18dp" />
-
-
-
-
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        android:layout_below="@id/time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="Customer Name : "
-                        android:textColor="@android:color/white"
-                        android:textSize="18dp" />
 
 
                 <TextView
                     android:id="@+id/Description"
-                    android:layout_below="@id/tvName"
+                    android:layout_below="@id/time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Description: "
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="14dp"
                     android:textSize="18dp" />
 
             <ImageView
-                android:layout_below="@id/Description"
                 android:id="@+id/serviceType"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:textColor="@color/white"
-                android:src="@drawable/fuel"
-                android:layout_marginRight="15dp"
-                />
-            <ImageView
-                android:layout_toRightOf="@id/serviceType"
                 android:layout_below="@id/Description"
-                android:id="@+id/img_location"
-                android:layout_width="50sp"
-                android:layout_height="50sp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="center"
-                android:background="@drawable/on_click_btn"
+
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_location" />
+                android:src="@drawable/fuel"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:id="@+id/img_location"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/Description"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/on_click_btn"
+                android:layout_toRightOf="@id/serviceType"
+                android:src="@drawable/ic_location"
+                style="?android:attr/borderlessButtonStyle"
+                android:backgroundTint="@color/btn_click"
+                android:scaleType="fitXY" />
 
 
             <Button
                     android:layout_below="@id/Description"
                     android:id="@+id/chat"
+                    android:background="@drawable/on_click_btn"
                     android:layout_toRightOf="@id/img_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/btn_click"
                     android:textColor="@color/white"
-                    android:background="@color/gradientLightYellow"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_marginRight="15dp"
                     android:text="Chat"/>
                     <Button
                         android:layout_below="@id/Description"
+                        style="?android:attr/borderlessButtonStyle"
                         android:id="@+id/contact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
                         android:layout_toRightOf="@id/chat"
-                        android:background="@color/gradientLightYellow"
+                        android:background="@drawable/on_click_btn"
+                        android:backgroundTint="@color/btn_click"
+                        android:textColor="@color/white"
                         android:text="Contact"/>
 
 
